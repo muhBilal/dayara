@@ -1,0 +1,137 @@
+[18-Jan-2023 11:27:49 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[18-Jan-2023 11:28:06 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[18-Jan-2023 11:28:10 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[18-Jan-2023 11:28:55 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[18-Jan-2023 11:29:04 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[18-Jan-2023 11:31:06 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[18-Jan-2023 11:37:20 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Jan-2023 06:12:58 UTC] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/Collection.php:1349
+Stack trace:
+#0 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/Collection.php(11): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError()
+#1 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/composer/ClassLoader.php(571): include('/home/ruangwe2/...')
+#2 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile()
+#3 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/helpers.php(110): Composer\Autoload\ClassLoader->loadClass()
+#4 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(89): collect()
+#5 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(78): Illuminate\Foundation\PackageManifest->config()
+#6 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#7 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(230): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap()
+#8 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(151): Illuminate\Foundation\Application->bootstrapWith()
+#9 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(135): Illuminate\Foundation\Http\Kernel->bootstrap()
+#10 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(109): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#11 /home/ruangwe2/tokogenteng.ruangwedding.com/public/index.php(55): Illuminate\Foundation\Http\Kernel->handle()
+#12 /home/ruangwe2/tokogenteng.ruangwedding.com/server.php(21): require_once('/home/ruangwe2/...')
+#13 {main} in /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 11
+[19-Jan-2023 07:29:08 UTC] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/Collection.php:1349
+Stack trace:
+#0 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/Collection.php(11): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError()
+#1 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/composer/ClassLoader.php(571): include('/home/ruangwe2/...')
+#2 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile()
+#3 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/helpers.php(110): Composer\Autoload\ClassLoader->loadClass()
+#4 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(89): collect()
+#5 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(78): Illuminate\Foundation\PackageManifest->config()
+#6 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#7 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(230): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap()
+#8 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(151): Illuminate\Foundation\Application->bootstrapWith()
+#9 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(135): Illuminate\Foundation\Http\Kernel->bootstrap()
+#10 /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(109): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#11 /home/ruangwe2/tokogenteng.ruangwedding.com/public/index.php(55): Illuminate\Foundation\Http\Kernel->handle()
+#12 /home/ruangwe2/tokogenteng.ruangwedding.com/server.php(21): require_once('/home/ruangwe2/...')
+#13 {main} in /home/ruangwe2/tokogenteng.ruangwedding.com/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 11
+[24-Jan-2023 03:36:25 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 08:32:38 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 08:32:38 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 08:32:38 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 08:32:38 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 08:32:40 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 08:32:40 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 08:34:41 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 08:34:41 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 09:44:49 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 09:44:49 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 10:51:47 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 10:51:47 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 10:51:53 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 10:51:53 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 10:53:11 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 10:53:11 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 10:53:22 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 10:53:22 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[19-Feb-2023 10:53:50 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[19-Feb-2023 10:53:50 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:12:26 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 04:12:26 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:12:26 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 04:35:57 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 04:35:57 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:35:57 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 04:37:24 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 04:37:24 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:15 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:15 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:15 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 04:38:34 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:34 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:34 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 04:38:45 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:45 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 04:38:46 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 06:26:48 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:26:48 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:26:48 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Auth\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 06:34:36 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:34:36 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:34:36 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Api\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 06:36:08 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:36:08 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:36:17 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:36:17 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:36:17 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Api\Controller' not found in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/ApiAuthController.php on line 12
+[20-Feb-2023 06:36:35 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:36:35 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:39:16 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:39:16 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:39:46 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:39:46 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:43:57 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:43:57 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:46:42 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:46:42 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 06:48:45 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 06:48:45 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[20-Feb-2023 08:34:58 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[20-Feb-2023 08:34:58 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[22-Feb-2023 08:49:15 UTC] PHP Fatal error:  Cannot use Auth as Auth because the name is already in use in /home/ruangwe2/tokogenteng.ruangwedding.com/app/Http/Controllers/Api/KeranjangController.php on line 15
+[24-Feb-2023 23:21:17 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[24-Feb-2023 23:21:17 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[24-Feb-2023 23:21:17 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[24-Feb-2023 23:21:17 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[24-Feb-2023 23:21:25 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[24-Feb-2023 23:21:25 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[24-Feb-2023 23:23:44 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[24-Feb-2023 23:23:44 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[24-Feb-2023 23:23:45 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[24-Feb-2023 23:23:45 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[24-Feb-2023 23:23:47 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[24-Feb-2023 23:23:47 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[25-Feb-2023 04:14:08 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[25-Feb-2023 04:14:08 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[26-Feb-2023 06:24:28 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[26-Feb-2023 06:24:28 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 00:47:51 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 00:47:51 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 00:50:24 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 00:50:24 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 04:30:51 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 04:30:51 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 04:31:06 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 04:31:06 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 04:31:06 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 04:31:06 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 04:31:11 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 04:31:11 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 04:38:57 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 04:38:57 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 08:54:16 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 08:54:16 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[27-Feb-2023 08:54:18 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[27-Feb-2023 08:54:18 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
