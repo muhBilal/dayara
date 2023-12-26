@@ -12,8 +12,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PreOrderController;
 
 Auth::routes();
+
+Route::get('/', function () {
+    return redirect('/login');
+});
 
 Route::get('/pelanggan',function(){
     return 'Pelanggan';
@@ -22,7 +27,7 @@ Route::get('/pelanggan',function(){
 Route::get('/admin/kedatangan/cetak/{id}','admin\KedatanganController@cetak')->name('admin.kedatangan.cetak');
 
 
-Route::group(['middleware' => ['auth','checkRole:admin']],function(){    
+Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::get('/admin','DashboardController@index')->name('admin.dashboard');
     Route::get('/pengaturan/alamat','admin\PengaturanController@aturalamat')->name('admin.pengaturan.alamat');
     Route::get('/pengaturan/ubahalamat/{id}','admin\PengaturanController@ubahalamat')->name('admin.pengaturan.ubahalamat');
@@ -57,7 +62,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::post('/admin/size/update/{id}','admin\SizeController@update')->name('admin.size.update');
     Route::get('/admin/size/edit/{id}','admin\SizeController@edit')->name('admin.size.edit');
     Route::get('/admin/size/delete/{id}','admin\SizeController@delete')->name('admin.size.delete');
-    
+
     Route::get('/admin/supplier','admin\SupplierController@index')->name('admin.supplier');
     Route::get('/admin/supplier/tambah','admin\SupplierController@tambah')->name('admin.supplier.tambah');
     Route::post('/admin/supplier/store','admin\SupplierController@store')->name('admin.supplier.store');
@@ -71,7 +76,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::post('/admin/warehouse/update/{id}','admin\WarehouseController@update')->name('admin.warehouse.update');
     Route::get('/admin/warehouse/edit/{id}','admin\WarehouseController@edit')->name('admin.warehouse.edit');
     Route::get('/admin/warehouse/delete/{id}','admin\WarehouseController@delete')->name('admin.warehouse.delete');
-    
+
     Route::get('/admin/kedatangan','admin\KedatanganController@index')->name('admin.kedatangan');
     Route::get('/admin/kedatangan/tambah','admin\KedatanganController@tambah')->name('admin.kedatangan.tambah');
     Route::post('/admin/kedatangan/store','admin\KedatanganController@store')->name('admin.kedatangan.store');
@@ -85,7 +90,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::post('/admin/rack/update/{id}','admin\RackController@update')->name('admin.rack.update');
     Route::get('/admin/rack/edit/{id}','admin\RackController@edit')->name('admin.rack.edit');
     Route::get('/admin/rack/delete/{id}','admin\RackController@delete')->name('admin.rack.delete');
-    
+
     Route::get('/admin/product','admin\ProductController@index')->name('admin.product');
     Route::get('/admin/product/tambah','admin\ProductController@tambah')->name('admin.product.tambah');
     Route::post('/admin/product/store','admin\ProductController@store')->name('admin.product.store');
@@ -106,7 +111,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::post('/admin/purchase/update/{id}','admin\PurchaseController@update')->name('admin.purchase.update');
     Route::get('/admin/purchase/edit/{id}','admin\PurchaseController@edit')->name('admin.purchase.edit');
     Route::get('/admin/purchase/delete/{id}','admin\PurchaseController@delete')->name('admin.purchase.delete');
-    
+
     Route::get('/admin/banner','admin\BannerController@index')->name('admin.banner');
     Route::get('/admin/banner/tambah','admin\BannerController@tambah')->name('admin.banner.tambah');
     Route::post('/admin/banner/store','admin\BannerController@store')->name('admin.banner.store');
@@ -132,4 +137,18 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
     Route::post('/admin/rekening/update/{id}','admin\RekeningController@update')->name('admin.rekening.update');
 
     Route::get('/admin/pelanggan','admin\PelangganController@index')->name('admin.pelanggan');
+
+
+    Route::prefix('admin/preorder')->group(function(){
+        Route::get('/admin/kedatangan/edit/{id}','admin\KedatanganController@edit')->name('admin.kedatangan.edit');
+
+        Route::get('/',[PreOrderController::class, 'index'])->name('admin.preOrder');
+        Route::get('/tambah',[PreOrderController::class, 'create'])->name('admin.preOrder.tambah');
+        Route::post('/store',[PreOrderController::class, 'store'])->name('admin.preOrder.store');
+        Route::get('/edit/{id}',[PreOrderController::class, 'edit'])->name('admin.preOrder.edit');
+        Route::put('/update/{id}',[PreOrderController::class, 'update'])->name('admin.preOrder.update');
+        Route::get('/delete/{id}',[PreOrderController::class, 'destroy'])->name('admin.preOrder.delete');
+        Route::get('/cetak/{id}',[PreOrderController::class, 'print'])->name('admin.preOrder.cetak');
+    });
+
 });
