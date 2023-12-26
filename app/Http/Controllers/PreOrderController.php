@@ -93,7 +93,7 @@ class PreOrderController extends Controller
         $fishId = $preOrder->fish->id;
         $kedatangan = Kedatangan::where('fish_id', $fishId)->orderBy('urutan', 'asc')->get()->first();
         $rak_id = $kedatangan->id;
-        $get_rak = KedatanganRack::with('rack')->where('kedatangan_id', 17)->get()->first();
+        $get_rak = KedatanganRack::with('rack')->where('kedatangan_id', $rak_id)->get()->first();
         $rackName = $get_rak->rack->name;
 
         $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackName'));
