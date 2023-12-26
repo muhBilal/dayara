@@ -24,6 +24,7 @@
         <th>Jumlah Ikan</th>
         <th>Nama Customer</th>
         <th>Kendaraan</th>
+        <th>Rak</th>
         <th>Tanggal dan Waktu</th>
     </tr>
     <tr>
@@ -33,6 +34,7 @@
         <td>{{ $preOrder->qty }}</td>
         <td>{{ $preOrder->cust_name }}</td>
         <td>{{ $preOrder->cust_vehicle }}</td>
+        <td>{{ $rackName }}</td>
         <td>{{ $preOrder->created_at }}</td>
     </tr>
 </table>

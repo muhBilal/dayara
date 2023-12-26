@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Fish;
 use App\Grade;
+use App\Kedatangan;
+use App\KedatanganRack;
 use App\PreOrder;
 use App\Size;
 use App\Supplier;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+
 class PreOrderController extends Controller
 {
     public function index()
@@ -88,7 +90,14 @@ class PreOrderController extends Controller
     public function print($id)
     {
         $preOrder = PreOrder::with('fish', 'grade', 'size')->find($id);
-        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder'));
+        $fishId = $preOrder->fish->id;
+        $kedatangan = Kedatangan::where('fish_id', $fishId)->orderBy('urutan', 'asc')->get()->first();
+        $rak_id = $kedatangan->id;
+        $get_rak = KedatanganRack::with('rack')->where('kedatangan_id', 17)->get()->first();
+        $rackName = $get_rak->rack->name;
+
+        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackName'));
         return $pdf->stream('preOrder.pdf');
     }
+
 }

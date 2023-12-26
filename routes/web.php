@@ -140,8 +140,6 @@ Route::group(['middleware' => ['auth','checkRole:admin']],function(){
 
 
     Route::prefix('admin/preorder')->group(function(){
-        Route::get('/admin/kedatangan/edit/{id}','admin\KedatanganController@edit')->name('admin.kedatangan.edit');
-
         Route::get('/',[PreOrderController::class, 'index'])->name('admin.preOrder');
         Route::get('/tambah',[PreOrderController::class, 'create'])->name('admin.preOrder.tambah');
         Route::post('/store',[PreOrderController::class, 'store'])->name('admin.preOrder.store');
