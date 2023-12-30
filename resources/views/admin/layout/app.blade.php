@@ -118,7 +118,7 @@
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Stock</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
-
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">Barang Keluar</a></li>
 								</ul>
 							</div>
 						</li>

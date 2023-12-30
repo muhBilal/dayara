@@ -39,7 +39,7 @@ class PreOrderController extends Controller
             'cust_vehicle' => $request->vehicle,
             'qty' => $request->qty,
         ]);
-//        return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil ditambahkan');
+        //        return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil ditambahkan');
         $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder'));
         return $pdf->stream('preOrder.pdf');
     }
@@ -87,17 +87,42 @@ class PreOrderController extends Controller
         return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil dihapus');
     }
 
+
     public function print($id)
     {
         $preOrder = PreOrder::with('fish', 'grade', 'size')->find($id);
-        $fishId = $preOrder->fish->id;
-        $kedatangan = Kedatangan::where('fish_id', $fishId)->orderBy('urutan', 'asc')->get()->first();
-        $rak_id = $kedatangan->id;
-        $get_rak = KedatanganRack::with('rack')->where('kedatangan_id', $rak_id)->get()->first();
-        $rackName = $get_rak->rack->name;
+        $kedatangan = Kedatangan::where('fish_id', $preOrder->fish->id)
+            ->where('grade_id', $preOrder->grade->id)
+            ->where('size_id', $preOrder->size->id)
+            ->orderBy('urutan', 'asc')
+            ->get();
 
-        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackName'));
+        $remainingOrder = $preOrder->qty;
+        $rackInfo = [];
+
+        foreach ($kedatangan as $item) {
+            $quantityTaken = min($remainingOrder, $item->qty);
+            $rackDetails = KedatanganRack::with('rack')
+                ->where('kedatangan_id', $item->id)
+                ->get();
+
+            foreach ($rackDetails as $rackItem) {
+                $rackInfo[] = [
+                    'name' => $rackItem->rack->name,
+                    'qty' => $quantityTaken
+                ];
+            }
+
+            $remainingOrder -= $quantityTaken;
+
+            if ($remainingOrder <= 0) {
+                break;
+            }
+        }
+
+        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackInfo'));
         return $pdf->stream('preOrder.pdf');
     }
+
 
 }

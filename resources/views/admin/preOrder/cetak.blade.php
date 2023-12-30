@@ -7,6 +7,7 @@
             width: 100%;
             border-collapse: collapse;
         }
+
         th, td {
             border: 1px solid black;
             padding: 8px;
@@ -24,7 +25,6 @@
         <th>Jumlah Ikan</th>
         <th>Nama Customer</th>
         <th>Kendaraan</th>
-        <th>Rak</th>
         <th>Tanggal dan Waktu</th>
     </tr>
     <tr>
@@ -34,9 +34,21 @@
         <td>{{ $preOrder->qty }}</td>
         <td>{{ $preOrder->cust_name }}</td>
         <td>{{ $preOrder->cust_vehicle }}</td>
-        <td>{{ $rackName }}</td>
         <td>{{ $preOrder->created_at }}</td>
     </tr>
+</table>
+<br>
+<table>
+    <tr>
+        <th>Nama Rak</th>
+        <th>Jumlah Ikan</th>
+    </tr>
+    @foreach($rackInfo as $item)
+        <tr>
+            <td>{{ $item['name'] }}</td>
+            <td>{{ $item['qty'] }}</td>
+        </tr>
+    @endforeach
 </table>
 </body>
 </html>

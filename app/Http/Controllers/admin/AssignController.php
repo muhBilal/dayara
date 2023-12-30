@@ -32,9 +32,11 @@ class AssignController extends Controller
     {
         //menampilkan form tambah kategori
 
-        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->whereDate('date', '2023-10-10')->get();
-        $rack = Rack::all();
-       
+//        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->whereDate('date', '2023-10-10')->get();
+        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->get();
+        $kedatangan_rack = KedatanganRack::all();
+        $specificRackIds = $kedatangan_rack->pluck('rack_id')->toArray();
+        $rack = Rack::whereNotIn('id', $specificRackIds)->get();
 
         return view('admin.assign.tambah', compact('kedatangan', 'rack'));
     }
@@ -44,7 +46,7 @@ class AssignController extends Controller
         KedatanganRack::create($request->all());
 
         return redirect()->route('admin.assign')->with('status', 'Berhasil Menambah KedatanganRack');
-    
+
     }
 
     public function edit(KedatanganRack $id)
@@ -90,7 +92,7 @@ class AssignController extends Controller
         //mengahapus produk
         Storage::delete('public/' . $id->image);
         $id->delete();
-        
+
         return redirect()->route('admin.product')->with('status', 'Berhasil Mengahapus Produk');
     }
 
