@@ -43,9 +43,7 @@
                                                 <label for="exampleFormControlSelect2">Pilih Kedatangan</label>
                                                 <select class="form-control" name="kedatangan_id" id="kedatangan_id">
                                                     @foreach($kedatangan as $ikan)
-                                                        <option value="{{ $ikan->id }}">{{ $ikan->code }}
-                                                            - {{ $ikan->fish->name }} - {{ $ikan->grade->name }}
-                                                            - {{ $ikan->size->name }}</option>
+                                                        <option value="{{ $ikan->id }}">{{ $ikan->created_at }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
