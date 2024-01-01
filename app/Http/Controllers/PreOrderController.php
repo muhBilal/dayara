@@ -134,7 +134,7 @@ class PreOrderController extends Controller
                     ->where('size_id', $preOrder->size->id)
                     ->where('fish_id', $preOrder->fish->id);
             })
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         $remainingOrder = $preOrder->qty;
