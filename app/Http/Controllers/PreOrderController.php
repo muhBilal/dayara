@@ -87,39 +87,76 @@ class PreOrderController extends Controller
         return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil dihapus');
     }
 
+    // public function print($id)
+    // {
+    //     $preOrder = PreOrder::with('fish', 'grade', 'size')->find($id);
+
+    //     $kedatangan = Kedatangan::where('fish_id', $preOrder->fish->id)
+    //         ->where('grade_id', $preOrder->grade->id)
+    //         ->where('size_id', $preOrder->size->id)
+    //         ->orderBy('urutan', 'asc')
+    //         ->get();
+
+    //     $remainingOrder = $preOrder->qty;
+    //     $rackInfo = [];
+
+    //     foreach ($kedatangan as $item) {
+    //         $quantityTaken = min($remainingOrder, $item->qty);
+    //         $rackDetails = KedatanganRack::with('rack')
+    //             ->where('kedatangan_id', $item->id)
+    //             ->get();
+
+    //         foreach ($rackDetails as $rackItem) {
+    //             $rackInfo[] = [
+    //                 'name' => $rackItem->rack->name,
+    //                 'qty' => $quantityTaken
+    //             ];
+    //         }
+
+    //         $remainingOrder -= $quantityTaken;
+
+    //         if ($remainingOrder <= 0) {
+    //             break;
+    //         }
+    //     }
+
+    //     $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackInfo'));
+    //     return $pdf->stream('preOrder.pdf');
+    // }
+
 
     public function print($id)
     {
         $preOrder = PreOrder::with('fish', 'grade', 'size')->find($id);
-        $kedatangan = Kedatangan::where('fish_id', $preOrder->fish->id)
-            ->where('grade_id', $preOrder->grade->id)
-            ->where('size_id', $preOrder->size->id)
-            ->orderBy('urutan', 'asc')
+        $kedatanganRak = KedatanganRack::with('kedatangan', 'rack')
+            ->whereHas('kedatangan', function ($query) use ($preOrder) {
+                $query->where('grade_id', $preOrder->grade->id)
+                    ->where('size_id', $preOrder->size->id)
+                    ->where('fish_id', $preOrder->fish->id);
+            })
+            ->orderBy('created_at')
             ->get();
 
         $remainingOrder = $preOrder->qty;
         $rackInfo = [];
 
-        foreach ($kedatangan as $item) {
-            $quantityTaken = min($remainingOrder, $item->qty);
-            $rackDetails = KedatanganRack::with('rack')
-                ->where('kedatangan_id', $item->id)
-                ->get();
+        foreach ($kedatanganRak as $item) {
+            $qtyOnRack = $item->kedatangan->qty;
 
-            foreach ($rackDetails as $rackItem) {
+            if ($remainingOrder > 0 && $qtyOnRack > 0) {
+                $qtyToTake = min($remainingOrder, $qtyOnRack);
                 $rackInfo[] = [
-                    'name' => $rackItem->rack->name,
-                    'qty' => $quantityTaken
+                    'name' => $item->rack->name,
+                    'qty' => $qtyToTake,
                 ];
+                $remainingOrder -= $qtyToTake;
             }
-
-            $remainingOrder -= $quantityTaken;
-
             if ($remainingOrder <= 0) {
                 break;
             }
         }
 
+//        dd($rackInfo);
         $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackInfo'));
         return $pdf->stream('preOrder.pdf');
     }

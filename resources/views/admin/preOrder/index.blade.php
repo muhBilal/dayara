@@ -57,7 +57,7 @@
                                         <td>{{ $item->cust_name }}</td>
                                         <td>{{ $item->cust_vehicle }}</td>
                                         <td align="center">
-                                            @if($item->status == 'menunggu')
+{{--                                            @if($item->status == 'menunggu')--}}
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <a href="{{ route('admin.preOrder.edit',['id'=>$item->id]) }}"
                                                        target="_blank"
@@ -74,7 +74,7 @@
                                                         <i class="mdi mdi-delete-forever"></i>
                                                     </a>
                                                 </div>
-                                            @endif
+{{--                                            @endif--}}
                                         </td>
                                     </tr>
                                 @endforeach
