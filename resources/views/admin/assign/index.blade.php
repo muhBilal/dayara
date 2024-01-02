@@ -32,8 +32,10 @@
                           <tr>
                             <th width="5%">No</th>
                             <th>Rack</th>
-                            <th>Kode Kedatangan</th>
-                            <th>Item</th>
+                            <th>Kode</th>
+                            <th>Ikan</th>
+                            <th>Size</th>
+                            <th>Grade</th>
                             <th width="15%">Aksi</th>
                           </tr>
                         </thead>
@@ -44,6 +46,8 @@
                                 <td>{{ $data->rack->name }}</td>
                                 <td>{{ $data->kedatangan->code }}</td>
                                 <td>{{ $data->kedatangan->fish->name }}</td>
+                                <td>{{ $data->kedatangan->size->name }}</td>
+                                <td>{{ $data->kedatangan->grade->name }}</td>
                                 <td align="center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                   <a href="{{ route('admin.assign.edit',['id'=>$data->id]) }}" class="btn btn-warning btn-sm">

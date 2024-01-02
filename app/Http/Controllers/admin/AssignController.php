@@ -22,8 +22,9 @@ class AssignController extends Controller
     public function index()
     {
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
-        $assign = KedatanganRack::with('kedatangan','rack', 'kedatangan.fish')
+        $assign = KedatanganRack::with('kedatangan','rack', 'kedatangan.fish', 'kedatangan.grade', 'kedatangan.size')
             ->get();
+
 
         return view('admin.assign.index', compact('assign'));
     }
