@@ -55,37 +55,34 @@ class AssignController extends Controller
         //menampilkan form edit
         //dan mengambil data produk sesuai id dari parameter
 
+        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->get();
+        $rack = Rack::all();
+
+        // Pisahkan tanggal dari waktu
+        $tanggal = explode(' ', $id->created_at)[0]; // Ambil bagian tanggal saja
+
+        // Ubah format tanggal agar sesuai dengan format yang diterima oleh elemen input tanggal
+        $format_tanggal = date('Y-m-d', strtotime($tanggal));
+        $id->tanggal = $format_tanggal;
+
         return view('admin.assign.edit', [
-            'product'       => $id,
-            'categories'    => Categories::all(),
+            'kedatangan' => $kedatangan,
+            'rack'       => $rack,
+            'item'       => $id,
         ]);
     }
 
-    public function update(Product $id, Request $request)
+    public function update(KedatanganRack $id, Request $request)
     {
-        $prod = $id;
+        $data = $request->all();
 
-        if ($request->file('image')) {
+        $id->created_at = $data['date'];
+        $id->kedatangan_id = $data['kedatangan_id'];
+        $id->rack_id = $data['rack_id'];
 
-            Storage::delete('public/' . $prod->image);
-            $file = $request->file('image')->store('imageproduct', 'public');
-            $prod->image = $file;
-        }
+        $id->save();
 
-        $prod->name = $request->name;
-        $prod->description = $request->description;
-        $prod->price = $request->price;
-        $prod->weigth = $request->weigth;
-        $prod->panjang = $request->panjang;
-        $prod->lebar = $request->lebar;
-        $prod->isi = $request->isi;
-        $prod->categories_id = $request->categories_id;
-        $prod->stok = $request->stok;
-
-
-        $prod->save();
-
-        return redirect()->route('admin.product')->with('status', 'Berhasil Mengubah Kategori');
+        return redirect()->route('admin.assign')->with('status', 'Berhasil Mengubah Kedatangan Rack');
     }
 
     public function delete(Product $id)

@@ -36,7 +36,7 @@ class RackController extends Controller
         return redirect()->route('admin.rack')->with('status', 'Berhasil Menambah Rack');
     }
 
-    public function update(Categories $id, Request $request)
+    public function update(Rack $id, Request $request)
     {
         $id->update([
             'name' => $request->name
@@ -49,7 +49,7 @@ class RackController extends Controller
     public function edit(Rack $id)
     {
         return view('admin.rack.edit', [
-            'categorie' => $id
+            'rack' => $id
         ]);
     }
 

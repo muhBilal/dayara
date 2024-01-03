@@ -36,7 +36,7 @@ class FishController extends Controller
         return redirect()->route('admin.fish')->with('status', 'Berhasil Menambah Ikan');
     }
 
-    public function update(Categories $id, Request $request)
+    public function update(Fish $id, Request $request)
     {
         $id->update([
             'name' => $request->name
