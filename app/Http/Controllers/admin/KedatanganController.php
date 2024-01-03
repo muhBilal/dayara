@@ -72,36 +72,34 @@ class KedatanganController extends Controller
         //menampilkan form edit
         //dan mengambil data produk sesuai id dari parameter
 
-        return view('admin.kedatangan.edit', [
-            'product'       => $id,
-        ]);
+        $item = $id;
+
+        $warehouse = Warehouse::all();
+        $fish = Fish::all();
+        $size = Size::all();
+        $grade = Grade::all();
+        $supplier = Supplier::all();
+
+        return view('admin.kedatangan.edit', compact('warehouse', 'fish', 'size', 'grade', 'supplier', 'item'));
     }
 
-    public function update(Product $id, Request $request)
+    public function update(Request $request, Kedatangan $id)
     {
-        $prod = $id;
+        $data = $request->all();
 
-        if ($request->file('image')) {
+        $id->date = $data['date'];
+        $id->kontainer = $data['kontainer'];
+        $id->urutan = $data['urutan'];
+        $id->warehouse_id = $data['warehouse_id'];
+        $id->supplier_id = $data['supplier_id'];
+        $id->fish_id = $data['fish_id'];
+        $id->size_id = $data['size_id'];
+        $id->grade_id = $data['grade_id'];
+        $id->qty = $data['qty'];
 
-            Storage::delete('public/' . $prod->image);
-            $file = $request->file('image')->store('imageproduct', 'public');
-            $prod->image = $file;
-        }
+        $id->save();
 
-        $prod->name = $request->name;
-        $prod->description = $request->description;
-        $prod->price = $request->price;
-        $prod->weigth = $request->weigth;
-        $prod->panjang = $request->panjang;
-        $prod->lebar = $request->lebar;
-        $prod->isi = $request->isi;
-        $prod->categories_id = $request->categories_id;
-        $prod->stok = $request->stok;
-
-
-        $prod->save();
-
-        return redirect()->route('admin.product')->with('status', 'Berhasil Mengubah Kategori');
+        return redirect()->route('admin.kedatangan')->with('status', 'Berhasil Mengubah Kedatangan');
     }
 
     public function delete(Product $id)
