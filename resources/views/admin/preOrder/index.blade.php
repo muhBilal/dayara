@@ -57,7 +57,7 @@
                                         <td>{{ $item->cust_name }}</td>
                                         <td>{{ $item->cust_vehicle }}</td>
                                         <td align="center">
-{{--                                            @if($item->status == 'menunggu')--}}
+                                            @if($item->status == 'menunggu')
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <a href="{{ route('admin.preOrder.edit',['id'=>$item->id]) }}"
                                                        target="_blank"
@@ -68,13 +68,15 @@
                                                        class="btn btn-warning btn-sm">
                                                         <i class="mdi mdi-printer"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.preOrder.delete',['id'=>$item->id]) }}"
-                                                       onclick="return confirm('Yakin Hapus data')"
-                                                       class="btn btn-danger btn-sm">
-                                                        <i class="mdi mdi-delete-forever"></i>
-                                                    </a>
+                                                    <form action="{{route('admin.preOrder.destroy', $item->id)}}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus data?')">
+                                                            <i class="mdi mdi-delete-forever"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
-{{--                                            @endif--}}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Detailorder;
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Warehouse;
@@ -64,7 +65,7 @@ class KedatanganController extends Controller
         ], []);
 
         return redirect()->route('admin.kedatangan')->with('status', 'Berhasil Menambah Kedatangan');
-    
+
     }
 
     public function edit(Kedatangan $id)
@@ -102,14 +103,20 @@ class KedatanganController extends Controller
         return redirect()->route('admin.kedatangan')->with('status', 'Berhasil Mengubah Kedatangan');
     }
 
-    public function delete(Product $id)
+    public function destroy($id)
     {
-        //mengahapus produk
-        Storage::delete('public/' . $id->image);
-        $id->delete();
-
-        return redirect()->route('admin.product')->with('status', 'Berhasil Mengahapus Produk');
+        try {
+            DB::beginTransaction();
+            $item = Kedatangan::with('kedatanganRack')->findOrFail($id);
+            $item->kedatanganRack()->delete();
+            $item->delete();
+            DB::commit();
+            return redirect()->route('admin.kedatangan')->with('status', 'Berhasil Menghapus Produk');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.kedatangan')->with('error', 'Gagal Menghapus Produk');
+        }
     }
+
 
     public function cetak(Kedatangan $id)
     {

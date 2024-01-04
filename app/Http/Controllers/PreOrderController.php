@@ -81,9 +81,10 @@ class PreOrderController extends Controller
         return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil diupdate');
     }
 
-    public function destroy(PreOrder $id)
+    public function destroy($id)
     {
-        $id->delete();
+        $item = PreOrder::find($id);
+        $item->delete();
         return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil dihapus');
     }
 

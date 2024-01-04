@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
     Route::post('/admin/kedatangan/store', 'admin\KedatanganController@store')->name('admin.kedatangan.store');
     Route::post('/admin/kedatangan/update/{id}', 'admin\KedatanganController@update')->name('admin.kedatangan.update');
     Route::get('/admin/kedatangan/edit/{id}', 'admin\KedatanganController@edit')->name('admin.kedatangan.edit');
-    Route::get('/admin/kedatangan/delete/{id}', 'admin\KedatanganController@delete')->name('admin.kedatangan.delete');
+    Route::delete('/admin/kedatangan/delete/{id}', 'admin\KedatanganController@destroy')->name('admin.kedatangan.destroy');
 
     Route::get('/admin/rack', 'admin\RackController@index')->name('admin.rack');
     Route::get('/admin/rack/tambah', 'admin\RackController@tambah')->name('admin.rack.tambah');
@@ -104,8 +104,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
     Route::post('/admin/assign/store', 'admin\AssignController@store')->name('admin.assign.store');
     Route::post('/admin/assign/update/{id}', 'admin\AssignController@update')->name('admin.assign.update');
     Route::get('/admin/assign/edit/{id}', 'admin\AssignController@edit')->name('admin.assign.edit');
-    Route::get('/admin/assign/delete/{id}', 'admin\AssignController@delete')->name('admin.assign.delete');
     Route::post('/admin/assign/filter', 'admin\AssignController@filter')->name('admin.assign.filter');
+    Route::delete('/admin/assign/delete/{id}', 'admin\AssignController@destroy')->name('admin.assign.destroy');
 
     Route::get('/admin/purchase', 'admin\PurchaseController@index')->name('admin.purchase');
     Route::get('/admin/purchase/tambah', 'admin\PurchaseController@tambah')->name('admin.purchase.tambah');
@@ -140,14 +140,13 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
 
     Route::get('/admin/pelanggan', 'admin\PelangganController@index')->name('admin.pelanggan');
 
-
     Route::prefix('admin/preorder')->group(function () {
         Route::get('/', [PreOrderController::class, 'index'])->name('admin.preOrder');
         Route::get('/tambah', [PreOrderController::class, 'create'])->name('admin.preOrder.tambah');
         Route::post('/store', [PreOrderController::class, 'store'])->name('admin.preOrder.store');
         Route::get('/edit/{id}', [PreOrderController::class, 'edit'])->name('admin.preOrder.edit');
         Route::put('/update/{id}', [PreOrderController::class, 'update'])->name('admin.preOrder.update');
-        Route::get('/delete/{id}', [PreOrderController::class, 'destroy'])->name('admin.preOrder.delete');
+        Route::delete('/delete/{id}', [PreOrderController::class, 'destroy'])->name('admin.preOrder.destroy');
         Route::get('/cetak/{id}', [PreOrderController::class, 'print'])->name('admin.preOrder.cetak');
     });
 
