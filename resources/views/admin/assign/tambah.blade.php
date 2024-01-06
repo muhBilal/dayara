@@ -89,23 +89,31 @@
 {{-- Select2 --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        $('#date').keypress(function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                var selectedDate = $(this).val();
+                window.location.href = '{{ route("admin.assign.filter") }}?date=' + selectedDate;
+            }
+        }
+
         $('#ajaxselect').select2({
-        placeholder: 'Ketikkan nama rack...',
-        ajax: {
-            url: '/admin/assign/rack',
-            dataType: 'json',
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: item.name,
-                            id: item.id
-                        }
-                    })
-                };
-            },
-            cache: true
+            placeholder: 'Ketikkan nama rack...',
+            ajax: {
+                url: '/admin/assign/rack',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
         }
     });
     </script>
