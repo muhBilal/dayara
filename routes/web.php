@@ -105,8 +105,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
     Route::post('/admin/assign/store', 'admin\AssignController@store')->name('admin.assign.store');
     Route::post('/admin/assign/update/{id}', 'admin\AssignController@update')->name('admin.assign.update');
     Route::get('/admin/assign/edit/{id}', 'admin\AssignController@edit')->name('admin.assign.edit');
-    Route::post('/admin/assign/filter', 'admin\AssignController@filter')->name('admin.assign.filter');
     Route::delete('/admin/assign/delete/{id}', 'admin\AssignController@destroy')->name('admin.assign.destroy');
+    Route::get('/admin/assign/filter', 'admin\AssignController@filter')->name('admin.assign.filter');
 
     Route::get('/admin/purchase', 'admin\PurchaseController@index')->name('admin.purchase');
     Route::get('/admin/purchase/tambah', 'admin\PurchaseController@tambah')->name('admin.purchase.tambah');

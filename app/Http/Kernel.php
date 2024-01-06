@@ -67,4 +67,8 @@ class Kernel extends HttpKernel
         'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
         'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
     ];
+
+    protected $except = [
+        'admin/assign/filter',
+    ];
 }

@@ -36,9 +36,10 @@
                                     <div class="flex">
                                         <div class="w-3/4">
                                             <div class="form-group">
-                                                <label for="exampleInputUsername1">Tanggal</label>
-                                                <input required type="date" class="form-control" name="date" id="date">
+                                                <label for="date">Tanggal</label>
+                                                <input type="date" class="form-control" name="date" id="date" @if(isset($date)) value="{{ $date }}" @endif>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Pilih Kedatangan</label>
                                                 <select class="form-control" name="kedatangan_id" id="kedatangan_id">
@@ -108,4 +109,5 @@
         }
     });
     </script>
+
 @endsection

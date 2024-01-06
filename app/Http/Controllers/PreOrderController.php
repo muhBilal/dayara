@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Fish;
 use App\Grade;
-use App\Kedatangan;
 use App\KedatanganRack;
 use App\PreOrder;
 use App\Size;

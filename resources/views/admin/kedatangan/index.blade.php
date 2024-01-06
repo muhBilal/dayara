@@ -73,7 +73,7 @@
                                                       action="{{ route('admin.kedatangan.destroy',['id'=>$data->id]) }}">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin?')">
                                                         <i class="mdi mdi-delete-forever"></i>
                                                     </button>
                                                 </form>
