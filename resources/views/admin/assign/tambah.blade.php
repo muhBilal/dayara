@@ -36,9 +36,10 @@
                                     <div class="flex">
                                         <div class="w-3/4">
                                             <div class="form-group">
-                                                <label for="exampleInputUsername1">Tanggal</label>
-                                                <input required type="date" class="form-control" name="date" id="date">
+                                                <label for="date">Tanggal</label>
+                                                <input type="date" class="form-control" name="date" id="date" @if(isset($date)) value="{{ $date }}" @endif>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Pilih Kedatangan</label>
                                                 <select class="form-control" name="kedatangan_id" id="kedatangan_id">
@@ -80,14 +81,15 @@
 
 @section('js')
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        success: '#1bcfb4',
-                    }
+        $(document).ready(function() {
+            $('#date').keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    var selectedDate = $(this).val();
+                    window.location.href = '{{ route("admin.assign.filter") }}?date=' + selectedDate;
                 }
-            }
-        }
+            });
+        });
     </script>
+
 @endsection

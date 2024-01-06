@@ -4,17 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\Detailorder;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Warehouse;
-use App\KedatanganRack;
 use App\Kedatangan;
-use App\Fish;
-use App\Size;
-use App\Grade;
-use App\Supplier;
+use App\KedatanganRack;
 use App\Rack;
-
+use Illuminate\Http\Request;
 use PDF;
 
 class AssignController extends Controller
@@ -22,7 +15,7 @@ class AssignController extends Controller
     public function index()
     {
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
-        $assign = KedatanganRack::with('kedatangan','rack', 'kedatangan.fish', 'kedatangan.grade', 'kedatangan.size')
+        $assign = KedatanganRack::with('kedatangan', 'rack', 'kedatangan.fish', 'kedatangan.grade', 'kedatangan.size')
             ->get();
 
 
@@ -45,7 +38,6 @@ class AssignController extends Controller
     public function store(Request $request)
     {
         KedatanganRack::create($request->all());
-
         return redirect()->route('admin.assign')->with('status', 'Berhasil Menambah KedatanganRack');
 
     }
@@ -67,8 +59,8 @@ class AssignController extends Controller
 
         return view('admin.assign.edit', [
             'kedatangan' => $kedatangan,
-            'rack'       => $rack,
-            'item'       => $id,
+            'rack' => $rack,
+            'item' => $id,
         ]);
     }
 
@@ -94,23 +86,26 @@ class AssignController extends Controller
         return redirect()->route('admin.product')->with('status', 'Berhasil Mengahapus Produk');
     }
 
-
-    public function destroy($id)
+    public function filter(Request $request)
     {
-        $item = KedatanganRack::findOrFail($id);
-        $item->delete();
-        return redirect()->route('admin.assign')->with('status', 'Berhasil Mengahapus Kedatangan Rack');
+        $date = $request->date;
+        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->whereDate('date', $date)->get();
+        $kedatangan_rack = KedatanganRack::all();
+        $specificRackIds = $kedatangan_rack->pluck('rack_id')->toArray();
+        $rack = Rack::whereNotIn('id', $specificRackIds)->get();
+
+        return view('admin.assign.tambah', compact('kedatangan', 'rack', 'date'));
     }
 
     public function cetak(KedatanganRack $id)
     {
         $data = $id;
 
-    	$pdf = PDF::loadview('admin.assign.cetak',['data'=>$id]);
+        $pdf = PDF::loadview('admin.assign.cetak', ['data' => $id]);
         // return view('admin.assign.cetak', compact('data'));
 
         // return $pdf;
-    	return $pdf->stream('laporan-assign-pdf.pdf');
+        return $pdf->stream('laporan-assign-pdf.pdf');
     }
 
     public function detail($id)
@@ -130,7 +125,7 @@ class AssignController extends Controller
 
         return view('admin.transaksi.detail', [
             'detail' => $detail_order,
-            'order'  => $order
+            'order' => $order
         ]);
     }
 
@@ -214,8 +209,8 @@ class AssignController extends Controller
         //funtion untuk menginput no resi pesanan
         Order::where('id', $id)
             ->update([
-                'no_resi'           => $request->no_resi,
-                'status_order_id'   => 4
+                'no_resi' => $request->no_resi,
+                'status_order_id' => 4
             ]);
 
         return redirect()->route('admin.transaksi.perludikirim')->with('status', 'Berhasil Menginput No Resi');
