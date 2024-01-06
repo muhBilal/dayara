@@ -29,10 +29,17 @@ class AssignController extends Controller
         return view('admin.assign.index', compact('assign'));
     }
 
+    function getRack(Request $request) {
+        $kedatangan_rack = KedatanganRack::all();
+        $specificRackIds = $kedatangan_rack->pluck('rack_id')->toArray();
+        $rack = Rack::whereNotIn('id', $specificRackIds)->where('name', 'like', '%' . $request->q . '%')->get();
+
+        return response()->json($rack);
+    }
+
     public function tambah()
     {
         //menampilkan form tambah kategori
-
 //        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->whereDate('date', '2023-10-10')->get();
         $kedatangan = Kedatangan::with('fish', 'grade', 'size')->get();
         $kedatangan_rack = KedatanganRack::all();
@@ -44,6 +51,7 @@ class AssignController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         KedatanganRack::create($request->all());
 
         return redirect()->route('admin.assign')->with('status', 'Berhasil Menambah KedatanganRack');
