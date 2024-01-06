@@ -52,6 +52,13 @@
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Pilih Rack</label>
+                                                <select class="form-control" name="rack_id" id="ajaxselect">
+                                                    
+                                                </select>
+                                            </div>
+
+                                            {{-- <div class="form-group">
+                                                <label for="exampleFormControlSelect2">Pilih Rack</label>
                                                 <select class="form-control" name="rack_id"
                                                         id="exampleFormControlSelect2">
                                                     @foreach($rack as $categorie)
@@ -59,7 +66,7 @@
                                                             value="{{ $categorie->id }}" {{ $categorie->id === $item->rack_id ? 'selected' : '' }}>{{ $categorie->name }}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="text-right">
                                                 <button type="submit" class="bg-success btn btn-success text-right">
@@ -79,15 +86,34 @@
 @endsection
 
 @section('js')
+{{-- Select2 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        success: '#1bcfb4',
-                    }
-                }
-            }
-        }
+        $(document).ready(function() {
+            $('#ajaxselect').select2({
+                placeholder: 'Ketikkan nama rack...',
+                ajax: {
+                    url: '/admin/assign/rack',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+            });
+
+            var selectedRackId = '{{ $item->rack_id ?? '' }}';
+
+            $('#ajaxselect').val(1).trigger('change');
+        });
     </script>
+
 @endsection

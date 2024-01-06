@@ -44,7 +44,6 @@ class AssignController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         KedatanganRack::create($request->all());
         return redirect()->route('admin.assign')->with('status', 'Berhasil Menambah KedatanganRack');
 
@@ -56,7 +55,6 @@ class AssignController extends Controller
         //dan mengambil data produk sesuai id dari parameter
 
         $kedatangan = Kedatangan::with('fish', 'grade', 'size')->get();
-        $rack = Rack::all();
 
         // Pisahkan tanggal dari waktu
         $tanggal = explode(' ', $id->created_at)[0]; // Ambil bagian tanggal saja
@@ -69,7 +67,6 @@ class AssignController extends Controller
 
         return view('admin.assign.edit', [
             'kedatangan' => $kedatangan,
-            'rack' => $rack,
             'item' => $id,
         ]);
     }
