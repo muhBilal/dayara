@@ -65,6 +65,8 @@ class AssignController extends Controller
         $format_tanggal = date('Y-m-d', strtotime($tanggal));
         $id->tanggal = $format_tanggal;
 
+        // dd($id);
+
         return view('admin.assign.edit', [
             'kedatangan' => $kedatangan,
             'rack' => $rack,
@@ -74,13 +76,22 @@ class AssignController extends Controller
 
     public function update(KedatanganRack $id, Request $request)
     {
-        $data = $request->all();
+        $data = $request->validate([
+            'date' => 'required', // Sesuaikan dengan aturan validasi yang diinginkan
+            'kedatangan_id' => 'required',
+            'rack_id' => 'required',
+        ]);
 
+        // Pastikan data yang diambil sesuai dengan nama field yang diharapkan di tabel
         $id->created_at = $data['date'];
         $id->kedatangan_id = $data['kedatangan_id'];
         $id->rack_id = $data['rack_id'];
 
+        // Pastikan perubahan disimpan
         $id->save();
+
+        // Jika ingin melihat nilai variabel sebelum redirect, bisa menggunakan dd()
+        // dd($data, $id);
 
         return redirect()->route('admin.assign')->with('status', 'Berhasil Mengubah Kedatangan Rack');
     }
