@@ -37,7 +37,8 @@
                                         <div class="w-3/4">
                                             <div class="form-group">
                                                 <label for="date">Tanggal</label>
-                                                <input type="date" class="form-control" name="date" id="date" @if(isset($date)) value="{{ $date }}" @endif>
+                                                <input type="date" class="form-control" name="date" id="date"
+                                                       @if(isset($date)) value="{{ $date }}" @endif>
                                             </div>
 
                                             <div class="form-group">
@@ -53,7 +54,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Pilih Rack</label>
                                                 <select class="form-control" name="rack_id" id="ajaxselect">
-                                                    
+
                                                 </select>
                                             </div>
 
@@ -86,10 +87,12 @@
 @endsection
 
 @section('js')
-{{-- Select2 --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- Select2 --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+            integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $('#date').keypress(function(event) {
+        $('#date').keypress(function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 var selectedDate = $(this).val();
@@ -114,8 +117,8 @@
                     };
                 },
                 cache: true
-        }
-    });
+            }
+        });
     </script>
 
 @endsection

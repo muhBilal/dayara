@@ -93,13 +93,11 @@ class AssignController extends Controller
         return redirect()->route('admin.assign')->with('status', 'Berhasil Mengubah Kedatangan Rack');
     }
 
-    public function delete(Product $id)
+    public function delete($id)
     {
-        //mengahapus produk
-        Storage::delete('public/' . $id->image);
-        $id->delete();
-
-        return redirect()->route('admin.product')->with('status', 'Berhasil Mengahapus Produk');
+        $item = KedatanganRack::findOrFail($id);
+        $item->delete();
+        return redirect()->route('admin.assign')->with('status', 'Berhasil Mengahapus Produk');
     }
 
     public function filter(Request $request)
