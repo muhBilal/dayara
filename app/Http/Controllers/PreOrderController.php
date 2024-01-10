@@ -30,7 +30,7 @@ class PreOrderController extends Controller
 
     public function store(Request $request)
     {
-        $preOrder = PreOrder::create([
+        $item = PreOrder::create([
             'fish_id' => $request->fish_id,
             'fish_size_id' => $request->size_id,
             'fish_grade_id' => $request->grade_id,
@@ -38,8 +38,39 @@ class PreOrderController extends Controller
             'cust_vehicle' => $request->vehicle,
             'qty' => $request->qty,
         ]);
+
+        $preOrder = PreOrder::with('fish', 'grade', 'size')->find($item->id);
+
+        $kedatanganRak = KedatanganRack::with('kedatangan', 'rack')
+            ->whereHas('kedatangan', function ($query) use ($preOrder) {
+                $query->where('grade_id', $preOrder->grade->id)
+                    ->where('size_id', $preOrder->size->id)
+                    ->where('fish_id', $preOrder->fish->id);
+            })
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $remainingOrder = $preOrder->qty;
+        $rackInfo = [];
+
+        foreach ($kedatanganRak as $item) {
+            $qtyOnRack = $item->kedatangan->qty;
+
+            if ($remainingOrder > 0 && $qtyOnRack > 0) {
+                $qtyToTake = min($remainingOrder, $qtyOnRack);
+                $rackInfo[] = [
+                    'name' => $item->rack->name,
+                    'qty' => $qtyToTake,
+                ];
+                $remainingOrder -= $qtyToTake;
+            }
+            if ($remainingOrder <= 0) {
+                break;
+            }
+        }
+
         //        return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil ditambahkan');
-        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder'));
+        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackInfo'));
         return $pdf->stream('preOrder.pdf');
     }
 

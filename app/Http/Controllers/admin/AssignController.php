@@ -22,7 +22,8 @@ class AssignController extends Controller
         return view('admin.assign.index', compact('assign'));
     }
 
-    function getRack(Request $request) {
+    function getRack(Request $request)
+    {
         $kedatangan_rack = KedatanganRack::all();
         $specificRackIds = $kedatangan_rack->pluck('rack_id')->toArray();
         $rack = Rack::whereNotIn('id', $specificRackIds)->where('name', 'like', '%' . $request->q . '%')->get();
@@ -32,12 +33,14 @@ class AssignController extends Controller
 
     public function tambah()
     {
-        //menampilkan form tambah kategori
-//        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->whereDate('date', '2023-10-10')->get();
-        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->get();
         $kedatangan_rack = KedatanganRack::all();
-        $specificRackIds = $kedatangan_rack->pluck('rack_id')->toArray();
-        $rack = Rack::whereNotIn('id', $specificRackIds)->get();
+        $specificRack = $kedatangan_rack->pluck('rack_id', 'kedatangan_id')->toArray();
+
+        $kedatangan = Kedatangan::with('fish', 'grade', 'size')
+            ->whereNotIn('id', array_keys($specificRack))
+            ->get();
+
+        $rack = Rack::whereNotIn('id', array_values($specificRack))->get();
 
         return view('admin.assign.tambah', compact('kedatangan', 'rack'));
     }
@@ -103,10 +106,15 @@ class AssignController extends Controller
     public function filter(Request $request)
     {
         $date = $request->date;
-        $kedatangan = Kedatangan::with('fish', 'grade', 'size')->whereDate('date', $date)->get();
         $kedatangan_rack = KedatanganRack::all();
-        $specificRackIds = $kedatangan_rack->pluck('rack_id')->toArray();
-        $rack = Rack::whereNotIn('id', $specificRackIds)->get();
+        $specificRack = $kedatangan_rack->pluck('rack_id', 'kedatangan_id')->toArray();
+
+        $kedatangan = Kedatangan::with('fish', 'grade', 'size')
+            ->whereDate('date', $date)
+            ->whereNotIn('id', array_keys($specificRack))
+            ->get();
+        $rack = Rack::whereNotIn('id', array_values($specificRack))->get();
+
 
         return view('admin.assign.tambah', compact('kedatangan', 'rack', 'date'));
     }
