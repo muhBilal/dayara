@@ -94,7 +94,6 @@
     <script>
         $('#date').keypress(function(event){
             if (event.keyCode === 13) {
-                console.log("masuk")
                 event.preventDefault();
                 var selectedDate = $(this).val();
                 window.location.href = '{{ route("admin.assign.filter") }}?date=' + selectedDate;
