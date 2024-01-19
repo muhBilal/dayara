@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "barryvdh/laravel-dompdf": "^2.0",
+        "dompdf/dompdf": "^2.0",
         "endroid/qr-code": "^3.4",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",

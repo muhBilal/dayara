@@ -15,7 +15,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
                         <span></span>Overview <i
-                                class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                            class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
                     </li>
                 </ul>
             </nav>
@@ -37,12 +37,9 @@
                                 <thead>
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th>Nama Ikan</th>
-                                    <th>Jumlah</th>
-                                    <th>Size</th>
-                                    <th>Grade</th>
                                     <th>Nama Customer</th>
                                     <th>Kendaraan Customer</th>
+                                    <th>Waktu Order</th>
                                     <th width="15%">Aksi</th>
                                 </tr>
                                 </thead>
@@ -50,12 +47,9 @@
                                 @foreach($preOrder as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->fish->name }}</td>
-                                        <td>{{ $item->qty }}</td>
-                                        <td>{{$item->size->name}}</td>
-                                        <td>{{$item->grade->name}}</td>
-                                        <td>{{ $item->cust_name }}</td>
-                                        <td>{{ $item->cust_vehicle }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->vehicle }}</td>
+                                        <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
                                         <td align="center">
                                             @if($item->status == 'menunggu')
                                                 <div class="btn-group" role="group" aria-label="Basic example">
@@ -68,10 +62,14 @@
                                                        class="btn btn-warning btn-sm">
                                                         <i class="mdi mdi-printer"></i>
                                                     </a>
-                                                    <form action="{{route('admin.preOrder.destroy', $item->id)}}" method="post">
+                                                    <form action="{{route('admin.preOrder.destroy', $item->id)}}"
+                                                          method="post">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus data?')">
+                                                        {{--                                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus data?')">--}}
+                                                        {{--                                                            <i class="mdi mdi-delete-forever"></i>--}}
+                                                        {{--                                                        </button>  --}}
+                                                        <button class="btn btn-danger btn-sm">
                                                             <i class="mdi mdi-delete-forever"></i>
                                                         </button>
                                                     </form>

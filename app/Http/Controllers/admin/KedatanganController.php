@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Detailorder;
+use App\DetailOrder;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
@@ -22,6 +22,7 @@ class KedatanganController extends Controller
     {
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
         $kedatangan = Kedatangan::with('fish','grade','warehouse','size')
+            ->orderBy('id', 'asc')
             ->get();
 
         return view('admin.kedatangan.index', compact('kedatangan'));
@@ -132,7 +133,7 @@ class KedatanganController extends Controller
     public function detail($id)
     {
         //ambil data detail order sesuai id
-        $detail_order = Detailorder::join('products', 'products.id', '=', 'detail_order.product_id')
+        $detail_order = DetailOrder::join('products', 'products.id', '=', 'detail_order.product_id')
             ->join('order', 'order.id', '=', 'detail_order.order_id')
             ->select('products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*')
             ->where('detail_order.order_id', $id)
@@ -217,7 +218,7 @@ class KedatanganController extends Controller
             'status_order_id' => 3
         ]);
 
-        $order = Detailorder::where('order_id', $id)->get();
+        $order = DetailOrder::where('order_id', $id)->get();
 
         foreach ($order as $item) {
             Product::where('id', $item->product_id)->decrement('stok', $item->qty);

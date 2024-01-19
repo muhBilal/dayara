@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Order;
-use App\Detailorder;
+use App\DetailOrder;
 use App\Keranjang;
 use App\Rekening;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +48,7 @@ class OrderController extends Controller
     public function detail($id)
     {
         //function menampilkan detail order
-        $detail_order = Detailorder::join('products', 'products.id', '=', 'detail_order.product_id')
+        $detail_order = DetailOrder::join('products', 'products.id', '=', 'detail_order.product_id')
             ->join('order', 'order.id', '=', 'detail_order.order_id')
             ->select('products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*')
             ->where('detail_order.order_id', $id)
@@ -153,7 +153,7 @@ class OrderController extends Controller
             $barang = Keranjang::where('user_id', $userid)->get();
             //lalu masukan barang2 yang dibeli ke table detail order
             foreach ($barang as $brg) {
-                Detailorder::create([
+                DetailOrder::create([
                     'order_id' => $order->id,
                     'product_id' => $brg->products_id,
                     'qty' => $brg->qty,

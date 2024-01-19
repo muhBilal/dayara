@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Detailorder;
+use App\DetailOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +35,7 @@ class PurchaseController extends Controller
         $fish = Fish::all();
         $size = Size::all();
         $grade = Grade::all();
-       
+
 
         return view('admin.purchase.tambah', compact('fish', 'size', 'grade'));
     }
@@ -45,7 +45,7 @@ class PurchaseController extends Controller
         Purchase::create($request->all());
 
         return redirect()->route('admin.assign')->with('status', 'Berhasil Menambah PO');
-    
+
     }
 
     public function edit(Purchase $id)
@@ -97,7 +97,7 @@ class PurchaseController extends Controller
         //mengahapus produk
         Storage::delete('public/' . $id->image);
         $id->delete();
-        
+
         return redirect()->route('admin.product')->with('status', 'Berhasil Mengahapus Produk');
     }
 
@@ -115,7 +115,7 @@ class PurchaseController extends Controller
     public function detail($id)
     {
         //ambil data detail order sesuai id
-        $detail_order = Detailorder::join('products', 'products.id', '=', 'detail_order.product_id')
+        $detail_order = DetailOrder::join('products', 'products.id', '=', 'detail_order.product_id')
             ->join('order', 'order.id', '=', 'detail_order.order_id')
             ->select('products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*')
             ->where('detail_order.order_id', $id)
@@ -200,7 +200,7 @@ class PurchaseController extends Controller
             'status_order_id' => 3
         ]);
 
-        $order = Detailorder::where('order_id', $id)->get();
+        $order = DetailOrder::where('order_id', $id)->get();
 
         foreach ($order as $item) {
             Product::where('id', $item->product_id)->decrement('stok', $item->qty);

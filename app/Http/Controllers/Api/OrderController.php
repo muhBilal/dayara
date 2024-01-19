@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Order;
-use App\Detailorder;
+use App\DetailOrder;
 use App\Keranjang;
 use App\Rekening;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +37,7 @@ class OrderController extends Controller
             ->Where('order.status_order_id', '!=', 3)
             ->Where('order.status_order_id', '!=', 4)
             ->where('order.user_id', $user_id)->get();
-            
+
         $data = array(
             'order' => $order,
             'dicek' => $dicek,
@@ -46,7 +46,7 @@ class OrderController extends Controller
 
         return response()->json($data, 200);
     }
-    
+
     public function belum_bayar()
     {
         //menampilkan semua data pesanan
@@ -59,29 +59,29 @@ class OrderController extends Controller
 
         return response()->json($order, 200);
     }
-    
+
     public function proses()
     {
         //menampilkan semua data pesanan
         $user_id = Auth::user()->id;
 
-        
+
         $dicek = Order::join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->select('order.*', 'status_order.name')
             ->where('order.status_order_id', '!=', 1)
             ->Where('order.status_order_id', '!=', 5)
             ->Where('order.status_order_id', '!=', 6)
             ->where('order.user_id', $user_id)->get();
-    
+
 
         return response()->json($dicek, 200);
     }
-    
+
     public function selesai()
     {
         //menampilkan semua data pesanan
         $user_id = Auth::user()->id;
-        
+
         $histori = Order::join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->select('order.*', 'status_order.name')
             ->where('order.status_order_id', '!=', 1)
@@ -89,14 +89,14 @@ class OrderController extends Controller
             ->Where('order.status_order_id', '!=', 3)
             ->Where('order.status_order_id', '!=', 4)
             ->where('order.user_id', $user_id)->get();
-      
+
         return response()->json($histori, 200);
     }
 
     public function detail($id)
     {
         //function menampilkan detail order
-        $detail_order = Detailorder::join('products', 'products.id', '=', 'detail_order.product_id')
+        $detail_order = DetailOrder::join('products', 'products.id', '=', 'detail_order.product_id')
             ->join('order', 'order.id', '=', 'detail_order.order_id')
             ->select('products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*')
             ->where('detail_order.order_id', $id)
@@ -106,13 +106,13 @@ class OrderController extends Controller
             ->select('order.*', 'users.name as nama_pelanggan', 'status_order.name as status')
             ->where('order.id', $id)
             ->first();
-            
+
         $data = array(
                 'detail' => $detail_order,
                 'order'  => $order
             );
-            
-            
+
+
         return response()->json($data, 200);
 
     }
@@ -135,7 +135,7 @@ class OrderController extends Controller
 
             $order->save();
         }
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Bukti berhasil diupload',
@@ -145,7 +145,7 @@ class OrderController extends Controller
 
     public function pembayaran()
     {
-        
+
         return response()->json(Rekening::all(), 200);
 
     }
@@ -182,7 +182,7 @@ class OrderController extends Controller
             $order->status_order_id = 6;
             $order->save();
         }
-        
+
         return response()->json($order, 200);
     }
 
@@ -224,7 +224,7 @@ class OrderController extends Controller
             $barang = Keranjang::where('user_id', $userid)->get();
             //lalu masukan barang2 yang dibeli ke table detail order
             foreach ($barang as $brg) {
-                Detailorder::create([
+                DetailOrder::create([
                     'order_id' => $order->id,
                     'product_id' => $brg->products_id,
                     'qty' => $brg->qty,
@@ -235,10 +235,10 @@ class OrderController extends Controller
 
             return response()->json($order, 200);
         }
-        
+
 
     }
-    
+
     public function checkExpiredOrder(){
         $time = Carbon::now()->subHour(1);
 

@@ -2,13 +2,16 @@
 <html>
 <head>
     <style>
-        /* Tambahkan style CSS di sini */
-        table {
+        .cust-table {
+            border-collapse: collapse;
+            padding-bottom: 1em;
+        }
+        .default-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th, td {
+        .default-table th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
@@ -17,34 +20,46 @@
 </head>
 <body>
 <h1>Data Pre Order</h1>
-<table>
+<table class="cust-table">
+    <tr>
+        <th>Nama Customer</th>
+        <th>:</th>
+        <th>{{$custInfo['name']}}</th>
+    </tr>
+    <tr>
+        <th>Nama Customer</th>
+        <th>:</th>
+        <th>{{$custInfo['vehicle']}}</th>
+    </tr>
+</table>
+<table class="default-table">
     <tr>
         <th>Nama Ikan</th>
         <th>Size Ikan</th>
         <th>Grade Ikan</th>
         <th>Jumlah Ikan</th>
-        <th>Nama Customer</th>
-        <th>Kendaraan</th>
         <th>Tanggal dan Waktu</th>
     </tr>
-    <tr>
-        <td>{{ $preOrder->fish->name }}</td>
-        <td>{{ $preOrder->size->name }}</td>
-        <td>{{ $preOrder->grade->name }}</td>
-        <td>{{ $preOrder->qty }}</td>
-        <td>{{ $preOrder->cust_name }}</td>
-        <td>{{ $preOrder->cust_vehicle }}</td>
-        <td>{{ $preOrder->created_at }}</td>
-    </tr>
+   @foreach($preOrder as $fish)
+        <tr>
+            <td>{{ $fish->fish->name }}</td>
+            <td>{{ $fish->size->name }}</td>
+            <td>{{ $fish->grade->name }}</td>
+            <td>{{ $fish->qty }}</td>
+            <td>{{ $fish->created_at }}</td>
+        </tr>
+   @endforeach
 </table>
 <br>
-<table>
+<table class="default-table">
     <tr>
+        <th>Nama ikan</th>
         <th>Nama Rak</th>
         <th>Jumlah Ikan</th>
     </tr>
     @foreach($rackInfo as $item)
         <tr>
+            <td>{{ $item['fish_name'] }}</td>
             <td>{{ $item['name'] }}</td>
             <td>{{ $item['qty'] }}</td>
         </tr>
