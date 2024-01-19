@@ -93,16 +93,16 @@ class PreOrderController extends Controller
                     }
                 }
             }
-            $preOrder = [];
+            $fish = [];
             foreach ($idOrder as $item) {
-                $preOrder[] = DetailOrder::with('fish', 'grade', 'size')->find($item);
+                $fish[] = DetailOrder::with('fish', 'grade', 'size')->find($item);
             }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
         }
 
-        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('custInfo', 'items', 'rackInfo', 'preOrder'));
+        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('custInfo', 'items', 'rackInfo', 'fish'));
         return $pdf->stream('preOrder.pdf');
     }
 
@@ -155,78 +155,47 @@ class PreOrderController extends Controller
         }
     }
 
-    // public function print($id)
-    // {
-    //     $preOrder = PreOrder::with('fish', 'grade', 'size')->find($id);
-
-    //     $kedatangan = Kedatangan::where('fish_id', $preOrder->fish->id)
-    //         ->where('grade_id', $preOrder->grade->id)
-    //         ->where('size_id', $preOrder->size->id)
-    //         ->orderBy('urutan', 'asc')
-    //         ->get();
-
-    //     $remainingOrder = $preOrder->qty;
-    //     $rackInfo = [];
-
-    //     foreach ($kedatangan as $item) {
-    //         $quantityTaken = min($remainingOrder, $item->qty);
-    //         $rackDetails = KedatanganRack::with('rack')
-    //             ->where('kedatangan_id', $item->id)
-    //             ->get();
-
-    //         foreach ($rackDetails as $rackItem) {
-    //             $rackInfo[] = [
-    //                 'name' => $rackItem->rack->name,
-    //                 'qty' => $quantityTaken
-    //             ];
-    //         }
-
-    //         $remainingOrder -= $quantityTaken;
-
-    //         if ($remainingOrder <= 0) {
-    //             break;
-    //         }
-    //     }
-
-    //     $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackInfo'));
-    //     return $pdf->stream('preOrder.pdf');
-    // }
-
-
     public function print($id)
     {
-        $preOrder = PreOrder::with('fish', 'grade', 'size')->find($id);
-        $kedatanganRak = KedatanganRack::with('kedatangan', 'rack')
-            ->whereHas('kedatangan', function ($query) use ($preOrder) {
-                $query->where('grade_id', $preOrder->grade->id)
-                    ->where('size_id', $preOrder->size->id)
-                    ->where('fish_id', $preOrder->fish->id);
-            })
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        $remainingOrder = $preOrder->qty;
+        $item = PreOrder::with('detailOrders')->find($id);
+        $fish = $item->detailOrders;
         $rackInfo = [];
+        $custInfo = [
+            'name' => $item->name,
+            'vehicle' => $item->vehicle,
+        ];
+        foreach ($item->detailOrders as $items){
+            $kedatanganRak = KedatanganRack::with('kedatangan', 'rack', 'kedatangan.fish')
+                ->whereHas('kedatangan', function ($query) use ($items) {
+                    $query->where('grade_id', $items->fish_grade_id)
+                        ->where('size_id', $items->fish_size_id)
+                        ->where('fish_id', $items->fish_id);
+                })
+                ->orderBy('created_at', 'asc')
+                ->get();
 
-        foreach ($kedatanganRak as $item) {
-            $qtyOnRack = $item->kedatangan->qty;
+            $remainingOrder = $items->qty;
 
-            if ($remainingOrder > 0 && $qtyOnRack > 0) {
-                $qtyToTake = min($remainingOrder, $qtyOnRack);
-                $rackInfo[] = [
-                    'name' => $item->rack->name,
-                    'qty' => $qtyToTake,
-                ];
-                $remainingOrder -= $qtyToTake;
-            }
-            if ($remainingOrder <= 0) {
-                break;
+            foreach ($kedatanganRak as $item1) {
+                $qtyOnRack = $item1->kedatangan->qty;
+                if ($remainingOrder > 0 && $qtyOnRack > 0) {
+                    $qtyToTake = min($remainingOrder, $qtyOnRack);
+                    $rackInfo[] = [
+                        'name' => $item1->rack->name,
+                        'fish_name' => $item1->kedatangan->fish->name,
+                        'qty' => $qtyToTake,
+                    ];
+                    $remainingOrder -= $qtyToTake;
+                }
+                if ($remainingOrder <= 0) {
+                    break;
+                }
             }
         }
 
-//        dd($rackInfo);
-        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('preOrder', 'rackInfo'));
+        $pdf = \PDF::loadView('admin.preOrder.cetak', compact('custInfo', 'item', 'rackInfo', 'fish'));
         return $pdf->stream('preOrder.pdf');
+
     }
 
 

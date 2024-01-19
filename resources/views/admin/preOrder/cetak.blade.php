@@ -40,13 +40,13 @@
         <th>Jumlah Ikan</th>
         <th>Tanggal dan Waktu</th>
     </tr>
-   @foreach($preOrder as $fish)
+   @foreach($fish as $item)
         <tr>
-            <td>{{ $fish->fish->name }}</td>
-            <td>{{ $fish->size->name }}</td>
-            <td>{{ $fish->grade->name }}</td>
-            <td>{{ $fish->qty }}</td>
-            <td>{{ $fish->created_at }}</td>
+            <td>{{ $item->fish->name }}</td>
+            <td>{{ $item->size->name }}</td>
+            <td>{{ $item->grade->name }}</td>
+            <td>{{ $item->qty }}</td>
+            <td>{{ $item->created_at }}</td>
         </tr>
    @endforeach
 </table>
