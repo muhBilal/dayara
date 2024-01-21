@@ -113,11 +113,12 @@ class PreOrderController extends Controller
 
     public function edit($id)
     {
-        $preOrder = PreOrder::find($id);
+        $preOrder = PreOrder::with('detailOrders')->find($id);
         $fish = Fish::all();
         $size = Size::all();
         $grade = Grade::all();
-        return view('admin.preOrder.edit', compact('preOrder', 'fish', 'size', 'grade'));
+        $fishOrder = $preOrder->detailOrders;
+        return view('admin.preOrder.edit', compact('preOrder', 'fish', 'size', 'grade', 'fishOrder'));
     }
 
     public function update(Request $request, $id)

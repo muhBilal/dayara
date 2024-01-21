@@ -83,11 +83,6 @@
                                             </button>
                                         </div>
                                     </div>
-                                    @if(session('success'))
-                                        <div class="alert alert-success">
-                                            OKEH
-                                        </div>
-                                    @endif
 
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-success text-right" onclick="delayAndNavigate('{{ route('admin.preOrder') }}');">
