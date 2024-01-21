@@ -34,10 +34,10 @@ class PreOrderController extends Controller
         try {
             DB::beginTransaction();
             $mainFormData = $request->only(['fish_id', 'size_id', 'grade_id', 'qty']);
-            $additionalFormsData = [];
+            $items = [];
             if ($request->filled('counter')) {
-                for ($i = 2; $i <= $request->input('counter'); $i++) {
-                    $additionalFormsData[] = [
+                for ($i = 1; $i <= $request->input('counter'); $i++) {
+                    $items[] = [
                         'fish_id' => $request->input("fish_id_$i"),
                         'size_id' => $request->input("size_id_$i"),
                         'grade_id' => $request->input("grade_id_$i"),
@@ -46,7 +46,7 @@ class PreOrderController extends Controller
                 }
             }
 
-            $items = array_merge([$mainFormData], $additionalFormsData);
+//            $items = array_merge([$mainFormData], $additionalFormsData);
 
             $custInfo = [
                 'name' => $request->name,
@@ -97,6 +97,7 @@ class PreOrderController extends Controller
             foreach ($idOrder as $item) {
                 $fish[] = DetailOrder::with('fish', 'grade', 'size')->find($item);
             }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -118,28 +119,43 @@ class PreOrderController extends Controller
         $size = Size::all();
         $grade = Grade::all();
         $fishOrder = $preOrder->detailOrders;
+//        dd($fishOrder);
         return view('admin.preOrder.edit', compact('preOrder', 'fish', 'size', 'grade', 'fishOrder'));
     }
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'fish_id' => 'required',
-            'size_id' => 'required',
-            'grade_id' => 'required',
-            'qty' => 'required',
-        ]);
+        $items = [];
+        for ($i = 1; $i <= $request->input('counter'); $i++) {
+            $items[] = [
+                'fish_id' => $request->input("fish_id_$i"),
+                'size_id' => $request->input("size_id_$i"),
+                'grade_id' => $request->input("grade_id_$i"),
+                'qty' => $request->input("qty_$i"),
+            ];
+        }
 
-        $post = PreOrder::find($id);
+        $custInfo = [
+            'name' => $request->name,
+            'vehicle' => $request->vehicle,
+        ];
 
-        $post->update([
-            'fish_id' => $request->fish_id,
-            'fish_size_id' => $request->size_id,
-            'fish_grade_id' => $request->grade_id,
-            'cust_name' => $request->name,
-            'cust_vehicle' => $request->vehicle,
-            'qty' => $request->qty,
-        ]);
+        $po = PreOrder::with('detailOrders')->find($id);
+        $po->detailOrders()->delete();
+        $po->update($custInfo);
+
+        foreach ($items as $item) {
+            if ($item['qty'] == 0) {
+                continue;
+            }
+            $detailOrder = new DetailOrder([
+                'fish_id' => $item['fish_id'],
+                'fish_size_id' => $item['size_id'],
+                'fish_grade_id' => $item['grade_id'],
+                'qty' => $item['qty'],
+            ]);
+            $po->detailOrders()->save($detailOrder);
+        }
 
         return redirect()->route('admin.preOrder')->with('success', 'Pre Order berhasil diupdate');
     }

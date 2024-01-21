@@ -54,7 +54,6 @@
                                             @if($item->status == 'menunggu')
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <a href="{{ route('admin.preOrder.edit',['id'=>$item->id]) }}"
-                                                       target="_blank"
                                                        class="btn btn-warning btn-sm">
                                                         <i class="mdi mdi-tooltip-edit"></i>
                                                     </a>

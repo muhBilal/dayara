@@ -33,39 +33,6 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect2">Nama Ikan</label>
-                                        <select class="form-control" name="fish_id" id="exampleFormControlSelect2">
-                                            @foreach($fish as $item)
-                                                <option value="{{ $item->id }}"
-                                                        @if($item->id == $preOrder->fish_id ) selected @endif>{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect2">Size Ikan</label>
-                                        <select class="form-control" name="size_id" id="exampleFormControlSelect2">
-                                            @foreach($size as $item)
-                                                <option value="{{ $item->id }}"
-                                                        @if($item->id == $preOrder->fish_size_id) selected @endif>{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect2">Grade
-                                            Ikan {{$fishOrder->first()->fish_grade_id}}</label>
-                                        <select class="form-control" name="grade_id" id="exampleFormControlSelect2">
-                                            @foreach($grade as $item)
-                                                <option value="{{ $item->id }}"
-                                                        @if($item->id == $fishOrder->first()->fish_grade_id) selected @endif>{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputUsername1">Jumlah Ikan</label>
-                                        <input type="number" class="form-control" name="qty"
-                                               value="{{ $fishOrder->first()->qty }}">
-                                    </div>
-                                    <div class="form-group">
                                         <label for="exampleInputUsername1">Nama Customer</label>
                                         <input type="text" class="form-control" name="name"
                                                value="{{ $preOrder->name }}">
@@ -76,64 +43,55 @@
                                                value="{{$preOrder->vehicle}}">
                                     </div>
 
-                                    @foreach($fishOrder as $item)
-                                        @if($loop->first)
-                                            @continue
-                                        @endif
-
-                                        <div>
-                                            <div class="border border-left-0 border-right-0 border-bottom-0 p-3"></div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect2">Nama Ikan</label>
-                                                <select class="form-control" name="fish_id_${counter}"
-                                                        id="exampleFormControlSelect2">
-                                                    @foreach($fish as $item1)
-                                                        <option value="{{ $item1->id }}">{{ $item1->name }}</option>
-                                                    @endforeach
-                                                </select>
+{{--                                    <div id="additionalForms"></div>--}}
+                                    <div id="additionalForms">
+                                        @foreach($fishOrder as $key => $order)
+                                            <div id="section_{{ $key + 1 }}">
+                                                <div>
+                                                    <div class="border border-left-0 border-right-0 border-bottom-0 p-3"></div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect2">Nama Ikan</label>
+                                                        <select class="form-control" name="fish_id_{{ $key + 1 }}" id="exampleFormControlSelect2">
+                                                            @foreach($fish as $item)
+                                                                <option value="{{ $item->id }}" {{ $order->fish_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect2">Size Ikan</label>
+                                                        <select class="form-control" name="size_id_{{ $key + 1 }}" id="exampleFormControlSelect2">
+                                                            @foreach($size as $item)
+                                                                <option value="{{ $item->id }}" {{ $order->size_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect2">Grade Ikan</label>
+                                                        <select class="form-control" name="grade_id_{{ $key + 1 }}" id="exampleFormControlSelect2">
+                                                            @foreach($grade as $item)
+                                                                <option value="{{ $item->id }}" {{ $order->grade_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputUsername1">Jumlah Ikan</label>
+                                                        <input type="number" class="form-control" name="qty_{{ $key + 1 }}" value="{{ $order->qty }}">
+                                                    </div>
+                                                </div>
+                                                <div class="text-left">
+                                                    <button type="button" class="btn btn-danger text-right btnHapus" id="btnDelete_{{ $key + 1 }}">
+                                                        Hapus
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect2">Size Ikan</label>
-                                                <select class="form-control" name="size_id_${counter}"
-                                                        id="exampleFormControlSelect2">
-                                                    @foreach($size as $item1)
-                                                        <option value="{{ $item1->id }}">{{ $item1->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect2">Grade Ikan</label>
-                                                <select class="form-control" name="grade_id_${counter}"
-                                                        id="exampleFormControlSelect2">
-                                                    @foreach($grade as $item1)
-                                                        <option value="{{ $item1->id }}">{{ $item1->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputUsername1">Jumlah Ikan</label>
-                                                <input type="number" class="form-control" name="qty_${counter}">
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-
-                                    <div id="additionalForms"></div>
-
-
-                                    <div class="d-flex">
-                                        <div class="text-left">
-                                            <button type="button" class="btn btn-success text-right" id="btnTambah">
-                                                Tambah
-                                            </button>
-                                        </div>
-                                        <div class="text-left">
-                                            <button type="button" class="btn btn-danger text-right ml-3" id="btnHapus">
-                                                Hapus
-                                            </button>
-                                        </div>
+                                        @endforeach
                                     </div>
 
+                                    <div class="text-left mt-3">
+                                        <button type="button" class="btn btn-success text-right" id="btnTambah">
+                                            Tambah
+                                        </button>
+                                    </div>
 
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-success text-right">Simpan</button>
@@ -152,14 +110,14 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let counter = 1;
-            const btnHapus = $("#btnHapus")
-            btnHapus.hide()
-            counter === 0 && btnHapus.hide();
+            // let counter = 0;
+            let counter = {{ count($fishOrder) }};
+            console.log(counter)
 
-            $("#btnTambah").click(function () {
+            function addFormSection() {
                 counter++;
                 let additionalForm = `
+            <div id="section_${counter}">
                 <div>
                     <div class="border border-left-0 border-right-0 border-bottom-0 p-3"></div>
                     <div class="form-group">
@@ -169,37 +127,61 @@
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                 </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect2">Size Ikan</label>
-                    <select class="form-control" name="size_id_${counter}" id="exampleFormControlSelect2">
-                                @foreach($size as $item)
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Size Ikan</label>
+                <select class="form-control" name="size_id_${counter}" id="exampleFormControlSelect2">
+                            @foreach($size as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
+                            @endforeach
                 </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect2">Grade Ikan</label>
-                    <select class="form-control" name="grade_id_${counter}" id="exampleFormControlSelect2">
-                                    @foreach($grade as $item)
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Grade Ikan</label>
+                <select class="form-control" name="grade_id_${counter}" id="exampleFormControlSelect2">
+                            @foreach($grade as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
+                            @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="exampleInputUsername1">Jumlah Ikan</label>
                 <input type="number" class="form-control" name="qty_${counter}">
-                        </div>
-                </div>`;
-                $("#additionalForms").appensudo timedatectl set-time "2024-01-20 18:53:00"
-                d(additionalForm);
-                btnHapus.show()
+                    </div>
+                </div>
+                <div class="text-left">
+                    <button type="button" class="btn btn-danger text-right btnHapus" id="btnDelete_${counter}">
+                        Hapus
+                    </button>
+                </div>
+            </div>
+            `;
+                $("#additionalForms").append(additionalForm);
+            }
+
+            addFormSection();
+
+            function deleteFormSection(btn) {
+                const idToDelete = btn.id.split("_")[1];
+                const sectionToDelete = $("#section_" + idToDelete);
+
+                // if (counter === 1) {
+                //     alert("Tidak bisa menghapus form ini");
+                //     return;
+                // }
+
+                if (sectionToDelete.length) {
+                    sectionToDelete.remove();
+                    counter--;
+                }
+            }
+
+            $(document).on("click", ".btnHapus", function () {
+                deleteFormSection(this);
             });
 
-            btnHapus.click(function () {
-                counter--;
-                $("#additionalForms > div:last").remove();
-                counter === 0 && btnHapus.hide();
+            $("#btnTambah").click(function () {
+                addFormSection();
             });
 
             $("form").submit(function () {
@@ -210,11 +192,5 @@
                 }).appendTo($(this));
             });
         });
-
-        function delayAndNavigate(route) {
-            setTimeout(function () {
-                window.location.href = route;
-            }, 3);
-        }
     </script>
 @endsection
