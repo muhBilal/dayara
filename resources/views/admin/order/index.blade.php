@@ -10,7 +10,7 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-home"></i>
-                </span> PO </h3>
+                </span> Barang Keluar </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -28,73 +28,38 @@
                             <div class="col">
                                 <h4 class="card-title">Data Ikan</h4>
                             </div>
-                            {{--                            <div class="col text-right">--}}
-                            {{--                                <a href="{{ route('admin.preOrder.tambah') }}" class="btn btn-primary">Tambah</a>--}}
-                            {{--                            </div>--}}
+                            <div class="col text-right">
+                                <a href="{{ route('admin.preOrder.tambah') }}" class="btn btn-primary">Tambah</a>
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hovered" id="table">
                                 <thead>
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th>Nama Ikan</th>
-                                    <th>Jumlah</th>
-                                    <th>Size</th>
-                                    <th>Grade</th>
                                     <th>Nama Customer</th>
                                     <th>Kendaraan Customer</th>
+                                    <th>Waktu Order</th>
                                     <th>Status</th>
                                     <th width="15%">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($preOrder ?? '' as $item)
+                                @foreach($preOrder as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->fish->name }}</td>
-                                        <td>{{ $item->qty }}</td>
-                                        <td>{{$item->size->name}}</td>
-                                        <td>{{$item->grade->name}}</td>
-                                        <td>{{ $item->cust_name }}</td>
-                                        <td>{{ $item->cust_vehicle }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->vehicle }}</td>
+                                        <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td align="center">
-                                            @if ($item->status == 'menunggu')
+                                            @if($item->status == 'menunggu')
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('admin.preOrder.cetak', $item->id) }}"
-                                                       target="_blank"
+                                                    <a href="{{ route('admin.order.edit',['id'=>$item->id]) }}"
                                                        class="btn btn-warning btn-sm">
-                                                        <i class="mdi mdi-printer"></i>
+                                                        <i class="mdi mdi-tooltip-edit"></i>
                                                     </a>
-                                                    <form id="accept-form"
-                                                          action="{{ route('admin.order.accept', ['id' => $item->id]) }}"
-                                                          method="POST" style="display: inline;">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <a href="#"
-                                                           onclick="event.preventDefault(); document.getElementById('accept-form').submit();"
-                                                           class="btn btn-success btn-sm">
-                                                            <i class="mdi mdi-check"></i>
-                                                        </a>
-                                                    </form>
-                                                    <form id="reject-form"
-                                                          action="{{ route('admin.order.reject', ['id' => $item->id]) }}"
-                                                          method="POST" style="display: inline;">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <a href="#"
-                                                           onclick="if(confirm('Permintaan akan ditolak')){ event.preventDefault(); document.getElementById('reject-form').submit(); }"
-                                                           class="btn btn-danger btn-sm">
-                                                            <i class="mdi mdi mdi-close"></i>
-                                                        </a>
-                                                    </form>
                                                 </div>
-{{--                                            @else--}}
-{{--                                                <a href="{{ route('admin.preOrder.cetak', $item->id) }}"--}}
-{{--                                                   target="_blank"--}}
-{{--                                                   class="btn btn-warning btn-sm">--}}
-{{--                                                    <i class="mdi mdi-printer"></i>--}}
-{{--                                                </a>--}}
                                             @endif
                                         </td>
                                     </tr>
@@ -107,5 +72,4 @@
             </div>
         </div>
     </div>
-
 @endsection
