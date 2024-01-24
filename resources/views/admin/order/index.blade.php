@@ -55,7 +55,7 @@
                                         <td align="center">
                                             @if($item->status == 'menunggu')
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('admin.order.edit',['id'=>$item->id]) }}"
+                                                    <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
                                                        class="btn btn-warning btn-sm">
                                                         <i class="mdi mdi-tooltip-edit"></i>
                                                     </a>

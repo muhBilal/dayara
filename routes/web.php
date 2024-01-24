@@ -153,7 +153,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
 
     Route::prefix('admin/order')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.order');
-        Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('admin.order.edit');
+        Route::get('/detail/{id}', [OrderController::class, 'detail'])->name('admin.order.detail');
         Route::get('/scan', [OrderController::class, 'scan'])->name('admin.order.scan');
         Route::get('/check-order/{id}', [OrderController::class, 'checkOrder'])->name('admin.order.check');
         Route::put('/accept/{id}', [OrderController::class, 'accept'])->name('admin.order.accept');

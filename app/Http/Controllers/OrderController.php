@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DetailOrder;
 use App\Fish;
 use App\Grade;
 use App\Kedatangan;
@@ -18,21 +19,7 @@ class OrderController extends Controller
         return view('admin.order.index', compact('preOrder'));
     }
 
-    public function edit($id) {
-        $preOrder = PreOrder::with('detailOrders')->find($id);
-        $fish = Fish::all();
-        $size = Size::all();
-        $grade = Grade::all();
-        $fishOrder = $preOrder->detailOrders;
-
-        return view('admin.order.edit', compact('preOrder', 'fish', 'size', 'grade', 'fishOrder'));
-    }
-
-    public function scan() {
-        return view('admin.order.scan');
-    }
-
-    public function checkOrder($id) {
+    public function detail($id) {
         $item = PreOrder::with('detailOrders')->find($id);
         $fish = $item->detailOrders;
         $rackInfo = [];
@@ -69,10 +56,65 @@ class OrderController extends Controller
             }
         }
 
-        $item->status = 'sukses';
-        $item->save();
+        return view('admin.order.detail', compact('custInfo', 'item', 'rackInfo', 'fish'));
+    }
 
-        return response()->json(['message' => 'success'], 200);
+    public function scan() {
+        return view('admin.order.scan');
+    }
+
+    public function checkOrder($id) {
+        $item = DetailOrder::find($id);
+        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
+        $po = PreOrder::find($item->order_id);
+
+        if($item->status == 'sukses'){
+            return response()->json(['message' => 'duplicate'], 200);
+        }
+
+        if(count($getAllKedatangan) > 0){
+            $totalQty = $getAllKedatangan->sum('qty');
+            $qtyCurrent = $item->qty;
+            if($totalQty > $item->qty){
+                foreach($getAllKedatangan as $kedatangan){
+                    if($qtyCurrent != 0){
+                        if ($qtyCurrent >= $kedatangan->qty) {
+                            $qtyCurrent -= $kedatangan->qty;
+                            $kedatangan->qty = 0;
+                        } else {
+                            $kedatangan->qty -= $qtyCurrent;
+                            $qtyCurrent = 0;
+                        }
+                        $kedatangan->save();
+                    }else{
+                        break;
+                    }
+                }
+            }else {
+                return response()->json(['message' => 'limit'], 200);
+            }
+
+            $item->status = 'sukses';
+            $item->save();
+
+            $allPoItems = DetailOrder::where('order_id', $po->id)->get();
+
+            $success = 0;
+            foreach($allPoItems as $poItem){
+                if($poItem->status == 'sukses'){
+                    $success += 1;
+                }
+            }
+
+            if($success == count($allPoItems)) {
+                $po->status = 'sukses';
+                $po->save();
+            }
+
+            return response()->json(['message' => 'success'], 200);
+        }else{
+            return response()->json(['message' => 'failed'], 500);
+        }
     }
 
 

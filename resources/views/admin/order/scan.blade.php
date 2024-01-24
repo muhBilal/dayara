@@ -58,18 +58,21 @@
                         success: function (response) {
                             console.log(response)
                             if (response.message === 'success') {
-                                alert('berhasil');
-                                window.location.href = 'http://localhost:8000/admin/order';
+                                alert('Berhasil');
+                            } else if(response.message === 'duplicate') {
+                                alert('Gagal, produk sudah dilakukan scanning!');
+                            } else if(response.message === 'limit') {
+                                alert('Gagal, stok tidak cukup!');
                             } else {
-                                alert('Gagal atau respons tidak sesuai');
+                                alert('Gagal, produk tidak dapat ditemukan!');
                             }
+
+                            window.location.href = 'http://localhost:8000/admin/order';
                         }
                     });
                 }).catch(error => {
                     alert('something wrong');
                 });
-
-                html5QrcodeScanner.clear();
             }
 
             function onScanError(errorMessage) {
