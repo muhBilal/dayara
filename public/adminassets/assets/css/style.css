@@ -6548,6 +6548,14 @@ a.close.disabled {
   flex: 1 1 auto;
   padding: 15px; }
 
+
+.modal-body .barcode div img{
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+}
+
+
 .modal-footer {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12560,9 +12568,10 @@ dl {
     white-space: nowrap; }
     .table th img,
     .table td img {
-      width: 36px;
+      /* width: 36px;
       height: 36px;
-      border-radius: 100%; }
+      border-radius: 100%;  */
+    }
     .table th .badge,
     .table td .badge {
       margin-bottom: 0; }
