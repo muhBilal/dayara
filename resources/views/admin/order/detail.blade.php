@@ -35,6 +35,7 @@
                                     <thead>
                                         <tr>
                                             <th width="5%">No</th>
+                                            <th>Nama Rak</th>
                                             <th>Nama Ikan</th>
                                             <th>Size Ikan</th>
                                             <th>Grade Ikan</th>
@@ -45,37 +46,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($fish as $item)
-                                        <input type="hidden" id="itemID" value="{{ $item->id }}">
+                                        @foreach($rackInfo as $item)
+                                        <input type="hidden" id="itemID" value="{{ $item['id'] }}">
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->fish->name }}</td>
-                                            <td>{{ $item->size->name }}</td>
-                                            <td>{{ $item->grade->name }}</td>
-                                            <td>{{ $item->qty }}</td>
-                                            <td>{{ $item->created_at }}</td>
-                                            <td>{{ $item->status }}</td>
+                                            <td>{{ $item['name'] }}</td>
+                                            <td>{{ $item['fish_name'] }}</td>
+                                            <td>{{ $item['fish_size'] }}</td>
+                                            <td>{{ $item['fish_grade'] }}</td>
+                                            <td>{{ $item['qty'] }}</td>
+                                            <td>{{ $item['created_at'] }}</td>
+                                            <td>{{ $item['status'] }}</td>
                                             <td align="center">
-                                                @if($item->status == "menunggu")
+                                                @if($item['status'] == "menunggu")
                                                 <div class="text-right">
-                                                    <button type="button" class="btn btn-success text-right" data-bs-toggle="modal" data-bs-target="#generate-modal-{{ $item->id }}">
+                                                    <button type="button" class="btn btn-success text-right" data-bs-toggle="modal" data-bs-target="#generate-modal-{{ $item['id'] }}">
                                                         Tampilkan kode QR
                                                     </button>
                                                     <a href="{{ route('admin.order.scan') }}" class="text-white text-decoration-none btn btn-primary text-right">Scan kode</a>
                                                 </div>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="generate-modal-{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal fade" id="generate-modal-{{ $item['id'] }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h3 class="modal-title" id="staticBackdropLabel">Menampilkan kode</h3>
                                                             </div>
-                                                            <!-- <div class="modal-body">
-                                                                            <div class="modal-generator" id="barcode-{{ $item->id }}"></div>
-                                                                        </div> -->
                                                             <div class="modal-body barcode">
-                                                                <div class="modal-generator" id="barcode-{{ $item->id }}"></div>
+                                                                <div class="modal-generator" id="barcode-{{ $item['id'] }}"></div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -109,7 +108,7 @@
             var itemID = $(element).attr('id').split('-')[1];
 
             new QRCode(document.getElementById(`barcode-${itemID}`), {
-                text: `http://localhost:8000/admin/order/check-order/${itemID}`,
+                text: `http://localhost:8000/admin/kedatangan/cetak/${itemID}`,
                 width: 256, // Sesuaikan ukuran sesuai kebutuhan
                 height: 256
             });

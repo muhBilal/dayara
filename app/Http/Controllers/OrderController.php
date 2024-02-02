@@ -41,11 +41,18 @@ class OrderController extends Controller
 
             foreach ($kedatanganRak as $item1) {
                 $qtyOnRack = $item1->kedatangan->qty;
+                // dd($item1->kedatangan->id);
                 if ($remainingOrder > 0 && $qtyOnRack > 0) {
                     $qtyToTake = min($remainingOrder, $qtyOnRack);
                     $rackInfo[] = [
+                        'id' => $item1->kedatangan->id,
                         'name' => $item1->rack->name,
+                        'fish_id' => $item1->kedatangan->fish->id,
+                        'fish_size_id' => $item1->kedatangan->size->id,
+                        'fish_grade_id' => $item1->kedatangan->grade->id,
                         'fish_name' => $item1->kedatangan->fish->name,
+                        'fish_size' => $item1->kedatangan->grade->name,
+                        'fish_grade' => $item1->kedatangan->size->name,
                         'qty' => $qtyToTake,
                     ];
                     $remainingOrder -= $qtyToTake;
@@ -54,7 +61,18 @@ class OrderController extends Controller
                     break;
                 }
             }
+
+            foreach($fish as $detail_order){
+                foreach($rackInfo as &$rack){
+                    if ($rack['fish_id'] === $detail_order->fish_id && $rack['fish_size_id'] === $detail_order->fish_size_id && $rack['fish_grade_id'] === $detail_order->fish_grade_id) {
+                        $rack['status'] = $detail_order->status;
+                        $rack['created_at'] = $detail_order->created_at;
+                    }
+                }
+            }
         }
+
+        // dd($rackInfo);
 
         return view('admin.order.detail', compact('custInfo', 'item', 'rackInfo', 'fish'));
     }

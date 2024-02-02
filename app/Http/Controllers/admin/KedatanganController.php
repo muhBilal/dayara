@@ -12,6 +12,8 @@ use App\Kedatangan;
 use App\Fish;
 use App\Size;
 use App\Grade;
+use App\KedatanganRack;
+use App\PreOrder;
 use App\Supplier;
 
 use PDF;
@@ -121,13 +123,79 @@ class KedatanganController extends Controller
 
     public function cetak(Kedatangan $id)
     {
-        $data = $id;
+        $url = url()->previous();
+        if($url === "http://localhost:8000/admin/kedatangan"){
+            $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
+            return $pdf->stream('laporan-kedatangan-pdf.pdf');
+        }else{
+            $getOrder = DetailOrder::where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->where('status', '!=', 'sukses')->first();
+            if($getOrder){
+                return $this->checkOrder($getOrder->id, $id);
+            }else{
+                return response()->json(['message' => 'failed'], 500);
+            }
+        }
+    }
 
-    	$pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
-        // return view('admin.kedatangan.cetak', compact('data'));
+    public function checkOrder($id, Kedatangan $kedatangan) {
+        $item = DetailOrder::find($id);
+        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
+        $po = PreOrder::find($item->order_id);
 
-        // return $pdf;
-    	return $pdf->stream('laporan-kedatangan-pdf.pdf');
+        if($item->status == 'sukses'){
+            return response()->json(['message' => 'duplicate'], 200);
+        }
+
+        if(count($getAllKedatangan) > 0){
+            $totalQty = $getAllKedatangan->sum('qty');
+            $qtyCurrent = $item->qty;
+
+            if($kedatangan->qty < $qtyCurrent){
+                if($totalQty > $item->qty){
+                    foreach($getAllKedatangan as $kedatangan_detail){
+                        if($qtyCurrent != 0){
+                            if ($qtyCurrent >= $kedatangan_detail->qty) {
+                                $qtyCurrent -= $kedatangan_detail->qty;
+                                $kedatangan_detail->qty = 0;
+                            } else {
+                                $kedatangan_detail->qty -= $qtyCurrent;
+                                $qtyCurrent = 0;
+                            }
+                            $kedatangan_detail->save();
+                        }else{
+                            break;
+                        }
+                    }
+                }else {
+                    return response()->json(['message' => 'limit'], 200);
+                }
+            }else{
+                $kedatangan->qty -= $qtyCurrent;
+                $qtyCurrent = 0;
+                $kedatangan->save();
+            }
+
+            $item->status = 'sukses';
+            $item->save();
+
+            $allPoItems = DetailOrder::where('order_id', $po->id)->get();
+
+            $success = 0;
+            foreach($allPoItems as $poItem){
+                if($poItem->status == 'sukses'){
+                    $success += 1;
+                }
+            }
+
+            if($success == count($allPoItems)) {
+                $po->status = 'sukses';
+                $po->save();
+            }
+
+            return response()->json(['message' => 'success'], 200);
+        }else{
+            return response()->json(['message' => 'failed'], 500);
+        }
     }
 
     public function detail($id)
