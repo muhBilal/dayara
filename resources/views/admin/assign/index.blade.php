@@ -55,10 +55,10 @@
                                                    class="btn btn-warning btn-sm">
                                                     <i class="mdi mdi-tooltip-edit"></i>
                                                 </a>
-                                                <a href="{{ route('admin.assign.edit',['id'=>$data->id]) }}"
-                                                   class="btn btn-warning btn-sm">
-                                                    <i class="mdi mdi-printer"></i>
-                                                </a>
+                                                <a href="{{ route('admin.kedatangan.cetak',['id'=>$data->kedatangan->id]) }}"
+                                                    class="btn btn-warning btn-sm">
+                                                     <i class="mdi mdi-printer"></i>
+                                                 </a>
                                                 <form method="post"
                                                       action="{{ route('admin.assign.destroy', $data->id) }}">
                                                     @csrf

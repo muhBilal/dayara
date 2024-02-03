@@ -18,7 +18,6 @@ class AssignController extends Controller
         $assign = KedatanganRack::with('kedatangan', 'rack', 'kedatangan.fish', 'kedatangan.grade', 'kedatangan.size')
             ->get();
 
-
         return view('admin.assign.index', compact('assign'));
     }
 

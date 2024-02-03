@@ -124,7 +124,7 @@ class KedatanganController extends Controller
     public function cetak(Kedatangan $id)
     {
         $url = url()->previous();
-        if($url === "http://localhost:8000/admin/kedatangan"){
+        if($url === "http://localhost:8000/admin/kedatangan" || $url === "http://localhost:8000/admin/assign"){
             $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
             return $pdf->stream('laporan-kedatangan-pdf.pdf');
         }else{
@@ -132,7 +132,7 @@ class KedatanganController extends Controller
             if($getOrder){
                 return $this->checkOrder($getOrder->id, $id);
             }else{
-                return response()->json(['message' => 'failed'], 500);
+                return redirect()->route('admin.kedatangan');
             }
         }
     }
