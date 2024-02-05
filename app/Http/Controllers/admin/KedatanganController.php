@@ -128,7 +128,7 @@ class KedatanganController extends Controller
             $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
             return $pdf->stream('laporan-kedatangan-pdf.pdf');
         }else{
-            $getOrder = DetailOrder::where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->where('status', '!=', 'sukses')->first();
+            $getOrder = DetailOrder::where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->first();
             if($getOrder){
                 return $this->checkOrder($getOrder->id, $id);
             }else{
