@@ -24,6 +24,7 @@ class KedatanganController extends Controller
     {
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
         $kedatangan = Kedatangan::with('fish','grade','warehouse','size')
+            ->where('qty', '>', 0)
             ->orderBy('id', 'asc')
             ->get();
 
@@ -124,7 +125,7 @@ class KedatanganController extends Controller
     public function cetak(Kedatangan $id)
     {
         $url = url()->previous();
-        if($url === "http://localhost:8000/admin/kedatangan" || $url === "http://localhost:8000/admin/assign"){
+        if($url === "http://127.0.0.1:8000/admin/kedatangan" || $url === "http://127.0.0.1:8000/admin/assign"){
             $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
             return $pdf->stream('laporan-kedatangan-pdf.pdf');
         }else{
@@ -190,6 +191,12 @@ class KedatanganController extends Controller
             if($success == count($allPoItems)) {
                 $po->status = 'sukses';
                 $po->save();
+            }
+
+            foreach($getAllKedatangan as $kedatangan){
+                if($kedatangan->qty == 0){
+                    KedatanganRack::where('kedatangan_id', $kedatangan->id)->delete();
+                }
             }
 
             return response()->json(['message' => 'success'], 200);

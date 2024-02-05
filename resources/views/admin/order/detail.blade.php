@@ -108,7 +108,7 @@
             var itemID = $(element).attr('id').split('-')[1];
 
             new QRCode(document.getElementById(`barcode-${itemID}`), {
-                text: `http://localhost:8000/admin/kedatangan/cetak/${itemID}`,
+                text: `http://127.0.0.1:8000/admin/kedatangan/cetak/${itemID}`,
                 width: 256, // Sesuaikan ukuran sesuai kebutuhan
                 height: 256
             });

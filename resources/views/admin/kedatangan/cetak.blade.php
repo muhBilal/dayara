@@ -78,6 +78,6 @@ table, th, td {
 <br/>
 
 <div class="card-body center">
-<img src="data:image/png;base64, {!! base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(120)->generate("http://192.168.1.2:8001/admin/kedatangan/cetak/".$data->id)) !!} ">
+<img src="data:image/png;base64, {!! base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(120)->generate("http://127.0.0.1:8000/admin/kedatangan/cetak/".$data->id)) !!} ">
 
 </div>
