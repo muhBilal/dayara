@@ -22,6 +22,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <h4 class="card-title">Data Rack Kedatangan</h4>
+                                <h5 class="card-title">{{$emptyRack}} Rak Kosong</h5>
                             </div>
                             <div class="col text-right">
                                 <a href="{{ route('admin.assign.tambah') }}" class="btn btn-primary">Tambah</a>

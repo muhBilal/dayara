@@ -17,8 +17,8 @@ class AssignController extends Controller
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
         $assign = KedatanganRack::with('kedatangan', 'rack', 'kedatangan.fish', 'kedatangan.grade', 'kedatangan.size')
             ->get();
-
-        return view('admin.assign.index', compact('assign'));
+        $emptyRack = Rack::whereNotIn('id', $assign->pluck('rack_id'))->count();
+        return view('admin.assign.index', compact('assign', 'emptyRack'));
     }
 
     function getRack(Request $request)

@@ -22,12 +22,12 @@
 <h1>Data Pre Order</h1>
 <table class="cust-table">
     <tr>
-        <th>Kendaraan Customer</th>
+        <th>Nama Customer</th>
         <th>:</th>
         <th>{{$custInfo['name']}}</th>
     </tr>
     <tr>
-        <th>Nama Customer</th>
+        <th>Kendaraan Customer</th>
         <th>:</th>
         <th>{{$custInfo['vehicle']}}</th>
     </tr>
@@ -40,7 +40,7 @@
         <th>Jumlah Ikan</th>
         <th>Tanggal dan Waktu</th>
     </tr>
-   @foreach($fish as $item)
+   @foreach($order->detailOrders as $item)
         <tr>
             <td>{{ $item->fish->name }}</td>
             <td>{{ $item->size->name }}</td>
@@ -51,19 +51,5 @@
    @endforeach
 </table>
 <br>
-<table class="default-table">
-    <tr>
-        <th>Nama ikan</th>
-        <th>Nama Rak</th>
-        <th>Jumlah Ikan</th>
-    </tr>
-    @foreach($rackInfo as $item)
-        <tr>
-            <td>{{ $item['fish_name'] }}</td>
-            <td>{{ $item['name'] }}</td>
-            <td>{{ $item['qty'] }}</td>
-        </tr>
-    @endforeach
-</table>
 </body>
 </html>
