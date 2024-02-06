@@ -60,6 +60,11 @@
                                                         <i class="mdi mdi-tooltip-edit"></i>
                                                     </a>
                                                 </div>
+                                            @else
+                                                <a href="{{ route('admin.order.struk', $item->id) }}"
+                                                   class="btn btn-warning btn-sm">
+                                                    <i class="mdi mdi-printer"></i>
+                                                </a>
                                             @endif
                                         </td>
                                     </tr>

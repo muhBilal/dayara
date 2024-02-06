@@ -24,12 +24,17 @@
     <tr>
         <th>Nama Customer</th>
         <th>:</th>
-        <th>{{$custInfo['name']}}</th>
+        <th>{{$order->name}}</th>
     </tr>
     <tr>
         <th>Kendaraan Customer</th>
         <th>:</th>
-        <th>{{$custInfo['vehicle']}}</th>
+        <th>{{$order->vehicle}}</th>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <th>:</th>
+        <th>{{$order->status}}</th>
     </tr>
 </table>
 <table class="default-table">

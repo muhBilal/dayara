@@ -186,4 +186,12 @@ class OrderController extends Controller
         ]);
         return redirect()->route('admin.order')->with('success', 'Pre Order berhasil ditolak');
     }
+
+    public function struk($id){
+        $order = PreOrder::with('detailOrders')->find($id);
+        $pdf = \PDF::loadview('admin.order.struk', compact('order'));
+        return $pdf->stream('struk-preorder.pdf');
+//        return view('admin.order.struk', compact('order'));
+    }
+
 }
