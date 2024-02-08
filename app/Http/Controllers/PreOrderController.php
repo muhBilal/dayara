@@ -72,7 +72,7 @@ class PreOrderController extends Controller
                             ->where('size_id', $detailOrder->fish_size_id)
                             ->where('fish_id', $detailOrder->fish_id);
                     })
-                    ->orderBy('created_at', 'asc')
+                    ->orderBy('id', 'asc')
                     ->get();
 
                 $remainingOrder = $detailOrder->qty;
@@ -119,7 +119,6 @@ class PreOrderController extends Controller
         $size = Size::all();
         $grade = Grade::all();
         $fishOrder = $preOrder->detailOrders;
-//        dd($fishOrder);
         return view('admin.preOrder.edit', compact('preOrder', 'fish', 'size', 'grade', 'fishOrder'));
     }
 
@@ -188,7 +187,7 @@ class PreOrderController extends Controller
                         ->where('size_id', $items->fish_size_id)
                         ->where('fish_id', $items->fish_id);
                 })
-                ->orderBy('created_at', 'asc')
+                ->orderBy('id', 'asc')
                 ->get();
 
             $remainingOrder = $items->qty;
