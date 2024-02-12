@@ -6,6 +6,7 @@ use App\DetailOrder;
 use App\Http\Controllers\Controller;
 use App\Kedatangan;
 use App\KedatanganRack;
+use App\Order;
 use App\Rack;
 use Illuminate\Http\Request;
 use PDF;

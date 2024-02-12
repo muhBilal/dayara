@@ -60,7 +60,6 @@
                                                 <td>{{ $item['status'] }}</td>
                                                 <td align="center">
                                                     <input type="hidden" class="itemQty" value="{{ $item['qty'] }}">
-                                                    <button class="sendCookie">send</button>
                                                     @if($item['status'] == "menunggu")
                                                         <div class="text-right">
                                                             <button type="button" class="btn btn-success text-right"
@@ -69,6 +68,8 @@
                                                                 Tampilkan kode QR
                                                             </button>
                                                             <a href="{{ route('admin.order.scan') }}"
+                                                            data-qty="{{ $item['qty'] }}"
+                                                            data-rack="{{ $item['name'] }}"
                                                                class="text-white text-decoration-none btn btn-primary text-right">Scan
                                                                 kode</a>
                                                         </div>
@@ -114,9 +115,32 @@
 @endsection
 
 @section('js')
-    <wscript src="{{ asset('js/jquery.min.js') }}"></wscript>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/qrcode.min.js') }}"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var scanButtonsQty = document.querySelectorAll('[data-qty]');
+
+            scanButtonsQty.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    var qty = event.currentTarget.dataset.qty;
+                    var expirationDate = new Date();
+                    expirationDate.setTime(expirationDate.getTime() + 3 * 60 * 60 * 1000);
+                    document.cookie = `qty=${qty}; expires=` + expirationDate.toUTCString() + '; path=/';
+                });
+            });
+
+            var scanButtonsRack = document.querySelectorAll('[data-qty]');
+
+            scanButtonsRack.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    var rack = event.currentTarget.dataset.rack;
+                    var expirationDate = new Date();
+                    expirationDate.setTime(expirationDate.getTime() + 3 * 60 * 60 * 1000);
+                    document.cookie = `rack=${rack}; expires=` + expirationDate.toUTCString() + '; path=/';
+                });
+            });
+        });
         $(document).ready(function () {
             $('[id^=barcode-]').each(function (index, element) {
                 var itemID = $(element).attr('id').split('-')[1];
@@ -126,12 +150,6 @@
                     width: 256,
                     height: 256
                 });
-            });
-
-            $('.sendCookie').click(function () {
-                var qty = $(this).siblings('.itemQty').val();
-                console.log('kirim');
-                document.cookie = `qty=${qty}`;
             });
         });
     </script>

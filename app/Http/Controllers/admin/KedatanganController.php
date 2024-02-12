@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\DetailOrder;
+use App\DetailTransaction;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
@@ -139,9 +140,18 @@ class KedatanganController extends Controller
     }
 
     public function checkOrder($id, Kedatangan $kedatangan) {
+        $cookieQty = isset($_COOKIE['qty']) ? $_COOKIE['qty'] : null;
+        $cookieRack = isset($_COOKIE['rack']) ? $_COOKIE['rack'] : null;
+        $qtyValue = intval($cookieQty);
+
+        if(is_null($cookieQty) || is_null($cookieRack)){
+            return response()->json(['message' => 'failed']);
+        }
+
         $item = DetailOrder::find($id);
         $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
         $po = PreOrder::find($item->order_id);
+        // return response()->json(['cookie' => $qtyValue, 'rack' => $cookieRack, 'kedatangan' => $kedatangan, 'item' => $item, 'allKedatangan' => $getAllKedatangan], 200);
 
         if($item->status == 'sukses'){
             return response()->json(['message' => 'duplicate'], 200);
@@ -149,10 +159,10 @@ class KedatanganController extends Controller
 
         if(count($getAllKedatangan) > 0){
             $totalQty = $getAllKedatangan->sum('qty');
-            $qtyCurrent = $item->qty;
+            $qtyCurrent = $qtyValue;
 
-            if($kedatangan->qty < $qtyCurrent){
-                if($totalQty > $item->qty){
+            if($kedatangan->qty <= $qtyCurrent){
+                if($totalQty >= $qtyValue){
                     foreach($getAllKedatangan as $kedatangan_detail){
                         if($qtyCurrent != 0){
                             if ($qtyCurrent >= $kedatangan_detail->qty) {
@@ -176,19 +186,35 @@ class KedatanganController extends Controller
                 $kedatangan->save();
             }
 
-            $item->status = 'sukses';
-            $item->save();
+            DetailTransaction::create([
+                'fish_id' => $item->fish_id,
+                'preorder_id' => $po->id,
+                'detail_order_id' => $item->id,
+                'qty' => $qtyValue,
+                'rack' => $cookieRack,
+                'status' => 'sukses'
+            ]);
 
-            $allPoItems = DetailOrder::where('order_id', $po->id)->get();
+            $allDetailTransaction = DetailTransaction::where('preorder_id', $po->id)->get();
+
+            $totalQtyDetailTransaction = $allDetailTransaction->sum('qty');
+
+            if($totalQtyDetailTransaction == $item->qty){
+                $item->status = 'sukses';
+                $item->save();
+            }
+
+
+            $allDetailOrders = DetailOrder::where('order_id', $po->id)->get();
 
             $success = 0;
-            foreach($allPoItems as $poItem){
-                if($poItem->status == 'sukses'){
+            foreach($allDetailOrders as $orderItem){
+                if($orderItem->status == 'sukses'){
                     $success += 1;
                 }
             }
 
-            if($success == count($allPoItems)) {
+            if($success == count($allDetailOrders)) {
                 $po->status = 'sukses';
                 $po->save();
             }

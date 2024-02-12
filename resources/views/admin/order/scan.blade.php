@@ -56,7 +56,6 @@
                         url: route,
                         type: 'GET',
                         success: function (response) {
-                            console.log(response)
                             if (response.message === 'success') {
                                 alert('Berhasil');
                             } else if(response.message === 'duplicate') {

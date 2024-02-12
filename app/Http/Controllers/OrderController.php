@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DetailOrder;
+use App\DetailTransaction;
 use App\Fish;
 use App\Grade;
 use App\Kedatangan;
@@ -41,7 +42,6 @@ class OrderController extends Controller
 
             foreach ($kedatanganRak as $item1) {
                 $qtyOnRack = $item1->kedatangan->qty;
-                // dd($item1->kedatangan->id);
                 if ($remainingOrder > 0 && $qtyOnRack > 0) {
                     $qtyToTake = min($remainingOrder, $qtyOnRack);
                     $rackInfo[] = [
@@ -65,14 +65,20 @@ class OrderController extends Controller
             foreach($fish as $detail_order){
                 foreach($rackInfo as &$rack){
                     if ($rack['fish_id'] === $detail_order->fish_id && $rack['fish_size_id'] === $detail_order->fish_size_id && $rack['fish_grade_id'] === $detail_order->fish_grade_id) {
-                        $rack['status'] = $detail_order->status;
                         $rack['created_at'] = $detail_order->created_at;
+                        $detailTransaction = DetailTransaction::where('rack', $rack['name'])->where('preorder_id', $detail_order->order_id)->where('fish_id', $detail_order->fish_id)->where('detail_order_id', $detail_order->id)->first();
+                        if($detailTransaction){
+                            $rack['status'] = $detailTransaction['status'];
+                            // dd($detailTransaction['status']);
+                        }else{
+                            $rack['status'] = 'menunggu';
+                        }
                     }
+
                 }
             }
         }
-
-        // dd($rackInfo);
+        // dd(['custInfo' => $custInfo, 'detailOrders' => $item->detailOrders, 'items' => $items, 'item' => $item, 'rackInfo' => $rackInfo, 'fish' => $fish]);
 
         return view('admin.order.detail', compact('custInfo', 'item', 'rackInfo', 'fish'));
     }
