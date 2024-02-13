@@ -70,6 +70,7 @@
                                                             <a href="{{ route('admin.order.scan') }}"
                                                             data-qty="{{ $item['qty'] }}"
                                                             data-rack="{{ $item['name'] }}"
+                                                            data-poID="{{ $item['poID'] }}"
                                                                class="text-white text-decoration-none btn btn-primary text-right">Scan
                                                                 kode</a>
                                                         </div>
@@ -130,7 +131,7 @@
                 });
             });
 
-            var scanButtonsRack = document.querySelectorAll('[data-qty]');
+            var scanButtonsRack = document.querySelectorAll('[data-rack]');
 
             scanButtonsRack.forEach(function(button) {
                 button.addEventListener('click', function(event) {
@@ -138,6 +139,17 @@
                     var expirationDate = new Date();
                     expirationDate.setTime(expirationDate.getTime() + 3 * 60 * 60 * 1000);
                     document.cookie = `rack=${rack}; expires=` + expirationDate.toUTCString() + '; path=/';
+                });
+            });
+
+            var scanButtonsPo = document.querySelectorAll('[data-poID]');
+
+            scanButtonsPo.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    var poID = event.currentTarget.dataset.poid;
+                    var expirationDate = new Date();
+                    expirationDate.setTime(expirationDate.getTime() + 3 * 60 * 60 * 1000);
+                    document.cookie = `poID=${poID}; expires=` + expirationDate.toUTCString() + '; path=/';
                 });
             });
         });

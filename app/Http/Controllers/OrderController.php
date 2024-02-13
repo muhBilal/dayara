@@ -54,6 +54,7 @@ class OrderController extends Controller
                         'fish_size' => $item1->kedatangan->grade->name,
                         'fish_grade' => $item1->kedatangan->size->name,
                         'qty' => $qtyToTake,
+                        'poID' => $item->id,
                     ];
                     $remainingOrder -= $qtyToTake;
                 }

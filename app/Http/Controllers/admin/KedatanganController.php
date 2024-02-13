@@ -130,7 +130,13 @@ class KedatanganController extends Controller
             $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
             return $pdf->stream('laporan-kedatangan-pdf.pdf');
         }else{
-            $getOrder = DetailOrder::where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->orderBy('id', 'desc')->first();
+            $cookiePO = isset($_COOKIE['poID']) ? $_COOKIE['poID'] : null;
+
+            if(is_null($cookiePO)){
+                return response()->json(['message' => 'failed']);
+            }
+
+            $getOrder = DetailOrder::where('order_id', $cookiePO)->where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->orderBy('id', 'desc')->first();
             if($getOrder){
                 return $this->checkOrder($getOrder->id, $id);
             }else{
@@ -151,7 +157,7 @@ class KedatanganController extends Controller
         $item = DetailOrder::find($id);
         $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
         $po = PreOrder::find($item->order_id);
-        // return response()->json(['cookie' => $qtyValue, 'rack' => $cookieRack, 'kedatangan' => $kedatangan, 'item' => $item, 'allKedatangan' => $getAllKedatangan], 200);
+        // return response()->json(['cookie' => $qtyValue, 'rack' => $cookieRack, 'kedatangan' => $kedatangan, 'item' => $item, 'allKedatangan' => $getAllKedatangan, 'item', $item], 200);
 
         if($item->status == 'sukses'){
             return response()->json(['message' => 'duplicate'], 200);
