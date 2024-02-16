@@ -16,7 +16,20 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $preOrder = PreOrder::all();
+        $preOrder = PreOrder::with('detailOrders')->get();
+        foreach($preOrder as $order){
+            $success = 0;
+            foreach($order->detailOrders as $detailOrder){
+                if($detailOrder->status == 'sukses'){
+                    $success += 1;
+                }
+            }
+            if($success == count($order->detailOrders)){
+                $order->status = 'selesai';
+                $order->save();
+            }
+        }
+
         return view('admin.order.index', compact('preOrder'));
     }
 
