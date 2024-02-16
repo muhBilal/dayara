@@ -58,12 +58,29 @@ class PreOrderController extends Controller
             $rackInfo = [];
             $idOrder = [];
             foreach ($items as $item) {
+                $checkRack = KedatanganRack::whereHas('kedatangan', function ($query) use ($item) {
+                    $query->where('grade_id', $item['grade_id'])
+                        ->where('size_id', $item['size_id'])
+                        ->where('fish_id', $item['fish_id']);
+                })->exists();
+
+                if (!$checkRack) {
+                    DB::rollBack();
+                    echo '<script>';
+                    echo 'alert("Pre Order gagal ditambahkan, rak tidak ditemukan");';
+                    echo 'window.close();';
+                    echo '</script>';
+                    exit();
+//                    return redirect()->route('admin.preOrder')->with('error', 'Pre Order gagal ditambahkan, rak tidak ditemukan');
+                }
+
                 $detailOrder = new DetailOrder([
                     'fish_id' => $item['fish_id'],
                     'fish_size_id' => $item['size_id'],
                     'fish_grade_id' => $item['grade_id'],
                     'qty' => $item['qty'],
                 ]);
+
                 $order->detailOrders()->save($detailOrder);
                 $idOrder[] = $detailOrder->id;
                 $kedatanganRak = KedatanganRack::with('kedatangan', 'rack', 'kedatangan.fish')
