@@ -154,6 +154,9 @@ class KedatanganController extends Controller
             return response()->json(['message' => 'failed']);
         }
 
+//        ambil kedatangan by nama rack yang di pasang di cookies
+//        habisno qty kalo masih sisa baru ambl yang lain
+
         $item = DetailOrder::find($id);
         $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
         $po = PreOrder::find($item->order_id);

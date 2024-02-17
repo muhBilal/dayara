@@ -45,7 +45,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($preOrder as $item)
+                                @foreach($preOrders as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
@@ -61,6 +61,12 @@
                                                     </a>
                                                 </div>
                                             @else
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
+                                                       class="btn btn-warning btn-sm">
+                                                        <i class="mdi mdi-tooltip-edit"></i>
+                                                    </a>
+                                                </div>
                                                 <a href="{{ route('admin.order.struk', $item->id) }}"
                                                    class="btn btn-warning btn-sm">
                                                     <i class="mdi mdi-printer"></i>
