@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Product;
 use App\Categories;
-use Illuminate\Support\Facades\DB;
+
 class KategoriController extends Controller
 {
     public function produkByKategori($id)

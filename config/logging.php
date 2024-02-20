@@ -34,10 +34,16 @@ return [
     |
     */
 
+    'deprecations' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
+
     'channels' => [
+        'deprecations' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/php-deprecation-warnings.log'),
+        ],
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['syslog', 'slack'],
             'ignore_exceptions' => false,
         ],
 

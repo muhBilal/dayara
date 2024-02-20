@@ -53,25 +53,19 @@
                                         <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td align="center">
-                                            @if($item->status == 'menunggu')
+{{--                                            @if($item->status == 'menunggu')--}}
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
                                                        class="btn btn-warning btn-sm">
                                                         <i class="mdi mdi-tooltip-edit"></i>
                                                     </a>
                                                 </div>
-                                            @else
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
-                                                       class="btn btn-warning btn-sm">
-                                                        <i class="mdi mdi-tooltip-edit"></i>
-                                                    </a>
-                                                </div>
+{{--                                            @else--}}
                                                 <a href="{{ route('admin.order.struk', $item->id) }}"
                                                    class="btn btn-warning btn-sm">
                                                     <i class="mdi mdi-printer"></i>
                                                 </a>
-                                            @endif
+{{--                                            @endif--}}
                                         </td>
                                     </tr>
                                 @endforeach

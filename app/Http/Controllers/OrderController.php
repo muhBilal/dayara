@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\DetailOrder;
 use App\DetailTransaction;
-use App\Fish;
-use App\Grade;
 use App\Kedatangan;
 use App\KedatanganRack;
 use App\PreOrder;
-use App\Size;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -35,7 +31,8 @@ class OrderController extends Controller
         return view('admin.order.index', compact('preOrders'));
     }
 
-    public function detail($id) {
+    public function detail($id)
+    {
         $item = PreOrder::with('detailOrders')->find($id);
         $fish = $item->detailOrders;
         $rackInfo = [];
@@ -99,11 +96,13 @@ class OrderController extends Controller
         return view('admin.order.detail', compact('custInfo', 'item', 'rackInfo', 'fish'));
     }
 
-    public function scan() {
+    public function scan()
+    {
         return view('admin.order.scan');
     }
 
-    public function checkOrder($id) {
+    public function checkOrder($id)
+    {
         $item = DetailOrder::find($id);
         $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
         $po = PreOrder::find($item->order_id);
@@ -157,7 +156,6 @@ class OrderController extends Controller
         }
     }
 
-
     public function accept($id)
     {
         $preOrder = PreOrder::find($id);
@@ -199,7 +197,6 @@ class OrderController extends Controller
         return redirect()->route('admin.order')->with('success', 'Pre Order berhasil diupdate');
     }
 
-
     public function reject($id)
     {
         $preOrder = PreOrder::find($id);
@@ -209,7 +206,8 @@ class OrderController extends Controller
         return redirect()->route('admin.order')->with('success', 'Pre Order berhasil ditolak');
     }
 
-    public function struk($id){
+    public function struk($id)
+    {
         $order = PreOrder::with('detailOrders')->find($id);
         $pdf = \PDF::loadview('admin.order.struk', compact('order'));
         return $pdf->stream('struk-preorder.pdf');

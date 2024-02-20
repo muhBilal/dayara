@@ -125,6 +125,8 @@ class KedatanganController extends Controller
 
     public function cetak(Kedatangan $id)
     {
+        dd('failed');
+
         $url = url()->previous();
         if($url === "http://127.0.0.1:8000/admin/kedatangan" || $url === "http://127.0.0.1:8000/admin/assign"){
             $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
