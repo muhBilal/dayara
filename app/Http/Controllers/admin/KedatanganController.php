@@ -15,6 +15,7 @@ use App\Size;
 use App\Grade;
 use App\KedatanganRack;
 use App\PreOrder;
+use App\Rack;
 use App\Supplier;
 
 use PDF;
@@ -125,16 +126,21 @@ class KedatanganController extends Controller
 
     public function cetak(Kedatangan $id)
     {
-        dd('failed');
-
         $url = url()->previous();
         if($url === "http://127.0.0.1:8000/admin/kedatangan" || $url === "http://127.0.0.1:8000/admin/assign"){
             $pdf = PDF::loadview('admin.kedatangan.cetak',['data'=>$id]);
             return $pdf->stream('laporan-kedatangan-pdf.pdf');
         }else{
             $cookiePO = isset($_COOKIE['poID']) ? $_COOKIE['poID'] : null;
+            $cookieRack = isset($_COOKIE['rack']) ? $_COOKIE['rack'] : null;
 
-            if(is_null($cookiePO)){
+            if(is_null($cookiePO) || is_null($cookieRack)){
+                return response()->json(['message' => 'failed']);
+            }
+
+            $kedatanganRack = KedatanganRack::with('rack')->where('kedatangan_id', $id->id)->first();
+
+            if($cookieRack !== $kedatanganRack->rack['name']){
                 return response()->json(['message' => 'failed']);
             }
 
@@ -155,9 +161,6 @@ class KedatanganController extends Controller
         if(is_null($cookieQty) || is_null($cookieRack)){
             return response()->json(['message' => 'failed']);
         }
-
-//        ambil kedatangan by nama rack yang di pasang di cookies
-//        habisno qty kalo masih sisa baru ambl yang lain
 
         $item = DetailOrder::find($id);
         $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
