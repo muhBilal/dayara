@@ -165,7 +165,6 @@ class KedatanganController extends Controller
         $item = DetailOrder::find($id);
         $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
         $po = PreOrder::find($item->order_id);
-        // return response()->json(['cookie' => $qtyValue, 'rack' => $cookieRack, 'kedatangan' => $kedatangan, 'item' => $item, 'allKedatangan' => $getAllKedatangan, 'item', $item], 200);
 
         if($item->status == 'sukses'){
             return response()->json(['message' => 'duplicate'], 200);
@@ -208,6 +207,9 @@ class KedatanganController extends Controller
                 'rack' => $cookieRack,
                 'status' => 'sukses'
             ]);
+
+            $item->status = 'sukses';
+            $item->save();
 
             $allDetailTransaction = DetailTransaction::where('preorder_id', $po->id)->get();
 
