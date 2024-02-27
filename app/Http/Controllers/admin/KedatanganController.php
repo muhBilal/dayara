@@ -145,6 +145,7 @@ class KedatanganController extends Controller
             }
 
             $getOrder = DetailOrder::where('order_id', $cookiePO)->where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->orderBy('id', 'desc')->first();
+            // return response()->json(['order' => $getOrder], 200);
             if($getOrder){
                 return $this->checkOrder($getOrder->id, $id);
             }else{
@@ -163,7 +164,7 @@ class KedatanganController extends Controller
         }
 
         $item = DetailOrder::find($id);
-        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
+        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->orderBy('date', 'asc')->get();
         $po = PreOrder::find($item->order_id);
 
         if($item->status == 'sukses'){
@@ -208,20 +209,24 @@ class KedatanganController extends Controller
                 'status' => 'sukses'
             ]);
 
-            $item->status = 'sukses';
-            $item->save();
-
             $allDetailTransaction = DetailTransaction::where('preorder_id', $po->id)->get();
 
             $totalQtyDetailTransaction = $allDetailTransaction->sum('qty');
 
-            if($totalQtyDetailTransaction == $item->qty){
-                $item->status = 'sukses';
-                $item->save();
-            }
-
 
             $allDetailOrders = DetailOrder::where('order_id', $po->id)->get();
+
+            $orderDetailQty = 0;
+            foreach($allDetailOrders as $orderItem){
+                $orderDetailQty += $orderItem->qty;
+            }
+
+            if($totalQtyDetailTransaction >= $orderDetailQty){
+                foreach($allDetailOrders as $orderItem){
+                    $orderItem->status = 'sukses';
+                    $orderItem->save();
+                }
+            }
 
             $success = 0;
             foreach($allDetailOrders as $orderItem){

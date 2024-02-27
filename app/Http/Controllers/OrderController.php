@@ -80,9 +80,9 @@ class OrderController extends Controller
                     if ($rack['fish_id'] === $detail_order->fish_id && $rack['fish_size_id'] === $detail_order->fish_size_id && $rack['fish_grade_id'] === $detail_order->fish_grade_id) {
                         $rack['created_at'] = $detail_order->created_at;
                         $detailTransaction = DetailTransaction::where('rack', $rack['name'])->where('preorder_id', $detail_order->order_id)->where('fish_id', $detail_order->fish_id)->where('detail_order_id', $detail_order->id)->first();
+                        // dd($rack['name']);
                         if($detailTransaction){
                             $rack['status'] = $detailTransaction['status'];
-                            // dd($detailTransaction['status']);
                         }else{
                             $rack['status'] = 'menunggu';
                         }
@@ -91,7 +91,6 @@ class OrderController extends Controller
                 }
             }
         }
-        // dd(['custInfo' => $custInfo, 'detailOrders' => $item->detailOrders, 'items' => $items, 'item' => $item, 'rackInfo' => $rackInfo, 'fish' => $fish]);
 
         return view('admin.order.detail', compact('custInfo', 'item', 'rackInfo', 'fish'));
     }
@@ -104,7 +103,7 @@ class OrderController extends Controller
     public function checkOrder($id)
     {
         $item = DetailOrder::find($id);
-        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->get();
+        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->orderBy('date', 'asc')->get();
         $po = PreOrder::find($item->order_id);
 
         if($item->status == 'sukses'){
