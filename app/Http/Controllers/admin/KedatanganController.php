@@ -139,117 +139,100 @@ class KedatanganController extends Controller
             }
 
             $kedatanganRack = KedatanganRack::with('rack')->where('kedatangan_id', $id->id)->first();
+            // return response()->json(['kedatanganRack' => $kedatanganRack], 200);
+
+            if(!$kedatanganRack){
+                return response()->json(['message' => 'empty']);
+            }
 
             if($cookieRack !== $kedatanganRack->rack['name']){
                 return response()->json(['message' => 'failed']);
             }
 
-            $getOrder = DetailOrder::where('order_id', $cookiePO)->where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->orderBy('id', 'desc')->first();
-            // return response()->json(['order' => $getOrder], 200);
-            if($getOrder){
-                return $this->checkOrder($getOrder->id, $id);
+            $detailOrder = DetailOrder::where('order_id', $cookiePO)->where('fish_id', $id->fish_id)->where('fish_size_id', $id->size_id)->where('fish_grade_id', $id->grade_id)->first();
+            // return response()->json(['order' => $detailOrder, 'kedatanganRack' => $kedatanganRack], 200);
+            if($detailOrder){
+                return $this->scanOrder($detailOrder, $id);
             }else{
                 return redirect()->route('admin.kedatangan');
             }
         }
     }
 
-    public function checkOrder($id, Kedatangan $kedatangan) {
+    function scanOrder($detailOrder, $kedatangan) {
+        // ambil data cookie
         $cookieQty = isset($_COOKIE['qty']) ? $_COOKIE['qty'] : null;
         $cookieRack = isset($_COOKIE['rack']) ? $_COOKIE['rack'] : null;
-        $qtyValue = intval($cookieQty);
+        $qtyOrder = intval($cookieQty);
 
+        // cek cookie
         if(is_null($cookieQty) || is_null($cookieRack)){
             return response()->json(['message' => 'failed']);
         }
 
-        $item = DetailOrder::find($id);
-        $getAllKedatangan = Kedatangan::where('fish_id', $item->fish_id)->where('size_id', $item->fish_size_id)->where('grade_id', $item->fish_grade_id)->orderBy('date', 'asc')->get();
-        $po = PreOrder::find($item->order_id);
+        // get po
+        $po = PreOrder::find($detailOrder->order_id);
 
-        if($item->status == 'sukses'){
+        // cek jika status order
+        if($detailOrder->status == 'sukses'){
             return response()->json(['message' => 'duplicate'], 200);
         }
 
-        if(count($getAllKedatangan) > 0){
-            $totalQty = $getAllKedatangan->sum('qty');
-            $qtyCurrent = $qtyValue;
+        // substraction
+        $kedatangan->qty -= $qtyOrder;
+        $kedatangan->save();
 
-            if($kedatangan->qty <= $qtyCurrent){
-                if($totalQty >= $qtyValue){
-                    foreach($getAllKedatangan as $kedatangan_detail){
-                        if($qtyCurrent != 0){
-                            if ($qtyCurrent >= $kedatangan_detail->qty) {
-                                $qtyCurrent -= $kedatangan_detail->qty;
-                                $kedatangan_detail->qty = 0;
-                            } else {
-                                $kedatangan_detail->qty -= $qtyCurrent;
-                                $qtyCurrent = 0;
-                            }
-                            $kedatangan_detail->save();
-                        }else{
-                            break;
-                        }
-                    }
-                }else {
-                    return response()->json(['message' => 'limit'], 200);
-                }
-            }else{
-                $kedatangan->qty -= $qtyCurrent;
-                $qtyCurrent = 0;
-                $kedatangan->save();
-            }
-
-            DetailTransaction::create([
-                'fish_id' => $item->fish_id,
-                'preorder_id' => $po->id,
-                'detail_order_id' => $item->id,
-                'qty' => $qtyValue,
-                'rack' => $cookieRack,
-                'status' => 'sukses'
-            ]);
-
-            $allDetailTransaction = DetailTransaction::where('preorder_id', $po->id)->get();
-
-            $totalQtyDetailTransaction = $allDetailTransaction->sum('qty');
-
-
-            $allDetailOrders = DetailOrder::where('order_id', $po->id)->get();
-
-            $orderDetailQty = 0;
-            foreach($allDetailOrders as $orderItem){
-                $orderDetailQty += $orderItem->qty;
-            }
-
-            if($totalQtyDetailTransaction >= $orderDetailQty){
-                foreach($allDetailOrders as $orderItem){
-                    $orderItem->status = 'sukses';
-                    $orderItem->save();
-                }
-            }
-
-            $success = 0;
-            foreach($allDetailOrders as $orderItem){
-                if($orderItem->status == 'sukses'){
-                    $success += 1;
-                }
-            }
-
-            if($success == count($allDetailOrders)) {
-                $po->status = 'sukses';
-                $po->save();
-            }
-
-            foreach($getAllKedatangan as $kedatangan){
-                if($kedatangan->qty == 0){
-                    KedatanganRack::where('kedatangan_id', $kedatangan->id)->delete();
-                }
-            }
-
-            return response()->json(['message' => 'success'], 200);
-        }else{
-            return response()->json(['message' => 'failed'], 500);
+        // penghapusan / pengosongan rack jika kedatangan == 0
+        if($kedatangan->qty == 0){
+            KedatanganRack::where('kedatangan_id', $kedatangan->id)->delete();
         }
+
+        // pembuatan data detail transaction untuk menyimpan transaksi
+        DetailTransaction::create([
+            'fish_id' => $detailOrder->fish_id,
+            'preorder_id' => $po->id,
+            'detail_order_id' => $detailOrder->id,
+            'qty' => $qtyOrder,
+            'rack' => $cookieRack,
+            'status' => 'sukses'
+        ]);
+
+        // get all detail transaction
+        $allDetailTransaction = DetailTransaction::where('preorder_id', $po->id)->get();
+        $totalQtyDetailTransaction = $allDetailTransaction->sum('qty');
+
+        // get all detail order
+        $allDetailOrders = DetailOrder::where('order_id', $po->id)->get();
+
+        // calculate all qty order detail
+        $orderDetailQty = 0;
+        foreach($allDetailOrders as $orderItem){
+            $orderDetailQty += $orderItem->qty;
+        }
+
+        // check if total qty detail transaction is bigger than total qty order detail
+        if($totalQtyDetailTransaction >= $orderDetailQty){
+            foreach($allDetailOrders as $orderItem){
+                $orderItem->status = 'sukses';
+                $orderItem->save();
+            }
+        }
+
+        // sum success detail order
+        $success = 0;
+        foreach($allDetailOrders as $orderItem){
+            if($orderItem->status == 'sukses'){
+                $success += 1;
+            }
+        }
+
+        // change po to success
+        if($success == count($allDetailOrders)) {
+            $po->status = 'sukses';
+            $po->save();
+        }
+
+        return response()->json(['message' => 'success'], 200);
     }
 
     public function detail($id)

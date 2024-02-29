@@ -51,7 +51,7 @@ class OrderController extends Controller
                 ->get();
 
             $remainingOrder = $items->qty;
-
+            
             foreach ($kedatanganRak as $item1) {
                 $qtyOnRack = $item1->kedatangan->qty;
                 if ($remainingOrder > 0 && $qtyOnRack > 0) {
@@ -79,15 +79,14 @@ class OrderController extends Controller
                 foreach($rackInfo as &$rack){
                     if ($rack['fish_id'] === $detail_order->fish_id && $rack['fish_size_id'] === $detail_order->fish_size_id && $rack['fish_grade_id'] === $detail_order->fish_grade_id) {
                         $rack['created_at'] = $detail_order->created_at;
-                        $detailTransaction = DetailTransaction::where('rack', $rack['name'])->where('preorder_id', $detail_order->order_id)->where('fish_id', $detail_order->fish_id)->where('detail_order_id', $detail_order->id)->first();
-                        // dd($rack['name']);
+                        $detailTransaction = DetailTransaction::where('preorder_id', $detail_order->order_id)->where('fish_id', $detail_order->fish_id)->where('detail_order_id', $detail_order->id)->where('qty', $rack['qty'])->first();
                         if($detailTransaction){
                             $rack['status'] = $detailTransaction['status'];
+                            $rack['name'] = $detailTransaction['rack'];
                         }else{
                             $rack['status'] = 'menunggu';
                         }
                     }
-
                 }
             }
         }

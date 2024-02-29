@@ -62,6 +62,8 @@
                                 alert('Gagal, produk sudah dilakukan scanning!');
                             } else if(response.message === 'limit') {
                                 alert('Gagal, stok tidak cukup!');
+                            } else if(response.message === 'empty') {
+                                alert('Gagal, rak kosong!');
                             } else {
                                 alert('Gagal, produk tidak dapat ditemukan!');
                             }
