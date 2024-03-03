@@ -93,6 +93,7 @@
 								<i class="mdi mdi-home menu-icon"></i>
 							</a>
 						</li>
+						@if(Auth::user()->role == 'admin')
 						<li class="nav-item ">
 							<a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
 								<span class="menu-title">Data Master</span>
@@ -110,6 +111,7 @@
 								</ul>
 							</div>
 						</li>
+						@endif
 						<li class="nav-item ">
 							<a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
 								<span class="menu-title">Transaksi</span>
@@ -118,11 +120,28 @@
 							</a>
 							<div class="collapse" id="ui-basic">
 								<ul class="nav flex-column sub-menu">
+								@if(Auth::user()->role == 'admin')
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Stock</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.stock') }}">Stock</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li>
+								@endif
+								
+
+								@if(Auth::user()->role == 'marketing')
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.stock') }}">Stock</a></li>	
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li>
+								@endif
+
+								@if(Auth::user()->role == 'gudang')
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
+								@endif
+								
+
 								</ul>
 							</div>
 						</li>

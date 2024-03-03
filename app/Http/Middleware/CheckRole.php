@@ -15,7 +15,8 @@ class CheckRole
      */
     public function handle($request, Closure $next,$roles)
     {
-        if($request->user()->role == $roles){
+        $roles_new = ['admin','gudang','marketing'];
+        if(in_array($request->user()->role, $roles_new)){
             return $next($request);
         }
         return redirect('/');

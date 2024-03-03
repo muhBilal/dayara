@@ -12,6 +12,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PreOrderController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -160,4 +161,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
         Route::put('/accept/{id}', [OrderController::class, 'accept'])->name('admin.order.accept');
         Route::put('/reject/{id}', [OrderController::class, 'reject'])->name('admin.order.reject');
     });
+
+    Route::get('/admin/stock', 'admin\StockController@index')->name('admin.stock');
+
 });
