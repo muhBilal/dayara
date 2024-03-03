@@ -42,8 +42,8 @@
                                 <td >{{$stock->fish->name}}</td>
                                 <td align="center">{{$stock->size->name}}</td>
                                 <td align="center">{{$stock->grade->name}}</td>
-                                <td align="center">{{$stock->warehouse->name}}</td>
-                                <td align="center">{{$stock->supplier->name}}</td>
+                                <td align="center">{{$stock->warehouse->name}}, {{$stock->supplier->name}}</td>
+                                <td align="center">{{$stock->qty}}</td>
                                 
                             </tr>
                           @endforeach

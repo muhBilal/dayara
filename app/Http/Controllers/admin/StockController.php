@@ -18,6 +18,10 @@ class StockController extends Controller
             ->distinct()
             ->orderBy('id', 'asc')
             ->get();
+
+        foreach ($stocks as $value) {
+            $value->qty = Kedatangan::where(['fish_id'=>$value->fish_id,'size_id'=>$value->size_id,'grade_id'=>$value->grade_id,'supplier_id'=>$value->supplier_id])->sum('qty');
+        }
             
         return view('admin.stock.index', compact('stocks'));
     }
