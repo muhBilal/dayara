@@ -51,6 +51,38 @@ class OrderController extends Controller
                 ->get();
 
             $remainingOrder = $items->qty;
+
+            $detailTransactions = DetailTransaction::where('preorder_id', $items->order_id)
+            ->where('fish_id', $items->fish_id)
+            ->with('detail_orders.fish','detail_orders.grade','detail_orders.size')
+            ->get();
+
+            foreach ($detailTransactions as $key => $item2) {
+                // dd($item2->detail_orders->fish->id);
+                $qtyOnRack = $item2->qty;
+                if ($remainingOrder > 0 && $qtyOnRack > 0) {
+                    $qtyToTake = min($remainingOrder, $qtyOnRack);
+                    
+                    $rackInfo[] = [
+                        'id' => $item2->id,
+                        'name' => $item2->rack,
+                        'fish_id' => $item2->detail_orders->fish->id,
+                        'fish_size_id' => $item2->detail_orders->size->id,
+                        'fish_grade_id' => $item2->detail_orders->grade->id,
+                        'fish_name' => $item2->detail_orders->fish->name,
+                        'fish_size' => $item2->detail_orders->grade->name,
+                        'fish_grade' => $item2->detail_orders->size->name,
+                        'status'=>$item2->status,
+                        'created_at'=>$item2->created_at,
+                        'qty' => $qtyToTake,
+                        'poID' => $items->order_id,
+                    ];
+                    $remainingOrder -= $qtyToTake;
+                }
+                if ($remainingOrder <= 0) {
+                    break;
+                }
+            }
             
             foreach ($kedatanganRak as $item1) {
                 $qtyOnRack = $item1->kedatangan->qty;
@@ -66,6 +98,8 @@ class OrderController extends Controller
                         'fish_size' => $item1->kedatangan->grade->name,
                         'fish_grade' => $item1->kedatangan->size->name,
                         'qty' => $qtyToTake,
+                        'status'=>'menunggu',
+                        'created_at'=>$item1->created_at,
                         'poID' => $item->id,
                     ];
                     $remainingOrder -= $qtyToTake;
@@ -74,21 +108,22 @@ class OrderController extends Controller
                     break;
                 }
             }
+            
 
-            foreach($fish as $detail_order){
-                foreach($rackInfo as &$rack){
-                    if ($rack['fish_id'] === $detail_order->fish_id && $rack['fish_size_id'] === $detail_order->fish_size_id && $rack['fish_grade_id'] === $detail_order->fish_grade_id) {
-                        $rack['created_at'] = $detail_order->created_at;
-                        $detailTransaction = DetailTransaction::where('preorder_id', $detail_order->order_id)->where('fish_id', $detail_order->fish_id)->where('detail_order_id', $detail_order->id)->where('qty', $rack['qty'])->first();
-                        if($detailTransaction){
-                            $rack['status'] = $detailTransaction['status'];
-                            $rack['name'] = $detailTransaction['rack'];
-                        }else{
-                            $rack['status'] = 'menunggu';
-                        }
-                    }
-                }
-            }
+            // foreach($fish as $detail_order){
+            //     foreach($rackInfo as &$rack){
+            //         if ($rack['fish_id'] === $detail_order->fish_id && $rack['fish_size_id'] === $detail_order->fish_size_id && $rack['fish_grade_id'] === $detail_order->fish_grade_id) {
+            //             $rack['created_at'] = $detail_order->created_at;
+            //             $detailTransaction = DetailTransaction::where('preorder_id', $detail_order->order_id)->where('fish_id', $detail_order->fish_id)->where('detail_order_id', $detail_order->id)->where('qty', $rack['qty'])->first();
+            //             if($detailTransaction){
+            //                 $rack['status'] = $detailTransaction['status'];
+            //                 // $rack['name'] = $detailTransaction['rack'];
+            //             }else{
+            //                 $rack['status'] = 'menunggu';
+            //             }
+            //         }
+            //     }
+            // }
         }
 
         return view('admin.order.detail', compact('custInfo', 'item', 'rackInfo', 'fish'));

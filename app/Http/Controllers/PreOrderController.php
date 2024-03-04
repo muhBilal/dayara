@@ -64,7 +64,9 @@ class PreOrderController extends Controller
                         ->where('fish_id', $item['fish_id']);
                 })->get();
 
+                
                 $totalQty = $checkRack->sum('kedatangan.qty');
+                // dd($totalQty);
 
                 if (!$checkRack || $totalQty < $item['qty']) {
                     DB::rollBack();
