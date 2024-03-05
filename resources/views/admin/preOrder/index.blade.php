@@ -35,9 +35,12 @@
                             <div class="col">
                                 <h4 class="card-title">Data Ikan</h4>
                             </div>
-                            <div class="col text-right">
-                                <a href="{{ route('admin.preOrder.tambah') }}" class="btn btn-primary">Tambah</a>
-                            </div>
+                            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'marketing')
+                                <div class="col text-right">
+                                    <a href="{{ route('admin.preOrder.tambah') }}" class="btn btn-primary">Tambah</a>
+                                </div>
+                            @endif
+
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hovered" id="table">
@@ -59,24 +62,29 @@
                                         <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
                                         <td align="center">
 {{--                                            @if($item->status == 'menunggu')--}}
+                           
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('admin.preOrder.edit',['id'=>$item->id]) }}"
-                                                       class="btn btn-warning btn-sm">
-                                                        <i class="mdi mdi-tooltip-edit"></i>
-                                                    </a>
+                                                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'marketing')
+                                                        <a href="{{ route('admin.preOrder.edit',['id'=>$item->id]) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                            <i class="mdi mdi-tooltip-edit"></i>
+                                                        </a>
+                                                    @endif
                                                     <a href="{{ route('admin.preOrder.cetak', $item->id) }}"
                                                        class="btn btn-warning btn-sm">
                                                         <i class="mdi mdi-printer"></i>
                                                     </a>
-                                                    <form action="{{route('admin.preOrder.destroy', $item->id)}}"
-                                                          method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger btn-sm"
-                                                                onclick="return confirm('Yakin hapus data?')">
-                                                            <i class="mdi mdi-delete-forever"></i>
-                                                        </button>
-                                                    </form>
+                                                    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'marketing')
+                                                        <form action="{{route('admin.preOrder.destroy', $item->id)}}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger btn-sm"
+                                                                    onclick="return confirm('Yakin hapus data?')">
+                                                                <i class="mdi mdi-delete-forever"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
 {{--                                            @endif--}}
                                         </td>

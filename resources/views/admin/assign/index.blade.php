@@ -24,9 +24,12 @@
                                 <h4 class="card-title">Data Rack Kedatangan</h4>
                                 <h5 class="card-title">{{$emptyRack}} Rak Kosong</h5>
                             </div>
-                            <div class="col text-right">
-                                <a href="{{ route('admin.assign.tambah') }}" class="btn btn-primary">Tambah</a>
-                            </div>
+                            @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
+                                <div class="col text-right">
+                                    <a href="{{ route('admin.assign.tambah') }}" class="btn btn-primary">Tambah</a>
+                                </div>
+
+                            @endif
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hovered" id="table">
@@ -38,7 +41,9 @@
                                     <th>Ikan</th>
                                     <th>Size</th>
                                     <th>Grade</th>
-                                    <th width="15%">Aksi</th>
+                                     @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
+                                        <th width="15%">Aksi</th>
+                                     @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -50,27 +55,30 @@
                                         <td>{{ $data->kedatangan->fish->name }}</td>
                                         <td>{{ $data->kedatangan->size->name }}</td>
                                         <td>{{ $data->kedatangan->grade->name }}</td>
-                                        <td align="center">
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ route('admin.assign.edit',['id'=>$data->id]) }}"
-                                                   class="btn btn-warning btn-sm">
-                                                    <i class="mdi mdi-tooltip-edit"></i>
-                                                </a>
-                                                <a href="{{ route('admin.kedatangan.cetak',['id'=>$data->kedatangan->id]) }}"
+                                        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
+                                            <td align="center">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="{{ route('admin.assign.edit',['id'=>$data->id]) }}"
                                                     class="btn btn-warning btn-sm">
-                                                     <i class="mdi mdi-printer"></i>
-                                                 </a>
-                                                <form method="post"
-                                                      action="{{ route('admin.assign.destroy', $data->id) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Yakin Hapus data')"
-                                                            class="btn btn-danger btn-sm">
-                                                        <i class="mdi mdi-delete-forever"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
+                                                        <i class="mdi mdi-tooltip-edit"></i>
+                                                    </a>
+                                                    <a href="{{ route('admin.kedatangan.cetak',['id'=>$data->kedatangan->id]) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="mdi mdi-printer"></i>
+                                                    </a>
+                                                    <form method="post"
+                                                        action="{{ route('admin.assign.destroy', $data->id) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" onclick="return confirm('Yakin Hapus data')"
+                                                                class="btn btn-danger btn-sm">
+                                                            <i class="mdi mdi-delete-forever"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>

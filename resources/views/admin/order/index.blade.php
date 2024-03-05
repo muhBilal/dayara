@@ -28,9 +28,11 @@
                             <div class="col">
                                 <h4 class="card-title">Data Ikan</h4>
                             </div>
+                            @if(Auth::user()->role == 'admin')
                             <div class="col text-right">
                                 <a href="{{ route('admin.preOrder.tambah') }}" class="btn btn-primary">Tambah</a>
                             </div>
+                            @endif
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hovered" id="table">
@@ -53,13 +55,16 @@
                                         <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td align="center">
+                                                @if(Auth::user()->role == 'admin')
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                            <i class="mdi mdi-tooltip-edit"></i>
+                                                        </a>
+                                                    </div>
+                                                @endif
 {{--                                            @if($item->status == 'menunggu')--}}
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
-                                                       class="btn btn-warning btn-sm">
-                                                        <i class="mdi mdi-tooltip-edit"></i>
-                                                    </a>
-                                                </div>
+                                                
 {{--                                            @else--}}
                                                 <a href="{{ route('admin.order.struk', $item->id) }}"
                                                    class="btn btn-warning btn-sm">
