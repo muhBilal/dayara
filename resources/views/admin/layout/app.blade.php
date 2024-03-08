@@ -41,7 +41,7 @@
 						<li class="nav-item nav-profile dropdown">
 							<a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
 								<div class="nav-profile-img">
-									<img src="{{ asset('adminassets') }}/assets/images/faces/face1.jpg" alt="image">
+									<img src="{{ asset('adminassets') }}/assets/images/dyr.jpg" alt="image">
 									<span class="availability-status online"></span>
 								</div>
 								<div class="nav-profile-text">
@@ -76,7 +76,7 @@
 						<li class="nav-item nav-profile">
 							<a href="#" class="nav-link">
 								<div class="nav-profile-image">
-									<img src="{{ asset('adminassets') }}/assets/images/faces/face1.jpg" alt="profile">
+									<img src="{{ asset('adminassets') }}/assets/images/dyr.jpg" alt="profile">
 									<span class="login-status online"></span>
 									<!--change to offline or busy as needed-->
 								</div>
@@ -121,9 +121,9 @@
 							<div class="collapse" id="ui-basic">
 								<ul class="nav flex-column sub-menu">
 								@if(Auth::user()->role == 'admin')
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.stock') }}">Stock</a></li>
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Penempatan Rack</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li>
 								@endif
@@ -131,15 +131,15 @@
 
 								@if(Auth::user()->role == 'marketing')
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.stock') }}">Stock</a></li>	
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Penempatan Rack</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li>
 								@endif
 
 								@if(Auth::user()->role == 'gudang')
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.stock') }}">Stock</a></li>	
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Kedatangan Rack</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.stock') }}">Stock</a></li>
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>	
+								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Penempatan Rack</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li>
 								@endif

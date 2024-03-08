@@ -5,7 +5,7 @@
             <h3 class="page-title">
 			<span class="page-title-icon bg-gradient-primary text-white mr-2">
 				<i class="mdi mdi-home"></i>
-			</span> Edit Kedatangan
+			</span> Edit Penempatan Rack
             </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
-                                <h4 class="card-title">Edit Penyaluran Rack</h4>
+                                <h4 class="card-title">Edit Penempatan Rack</h4>
                             </div>
                             <div class="col text-right">
                                 <a href="javascript:void(0)" onclick="window.history.back()" class="btn btn-primary">Kembali</a>
@@ -56,7 +56,7 @@
                                                     
                                                 </select>
                                             </div>
-
+                                            <p>Keterangan Kode Rack<br>Contoh: A1.2.3 <br>A1= Rack <br>2= Kolom<br>3= Tingkat</p>
                                             {{-- <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Pilih Rack</label>
                                                 <select class="form-control" name="rack_id"

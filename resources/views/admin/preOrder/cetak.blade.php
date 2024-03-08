@@ -19,32 +19,32 @@
     </style>
 </head>
 <body>
-<h1>Data Pre Order</h1>
+<h1 align="Center">Pre Order</h1>
 <table class="cust-table">
     <tr>
-        <th>Kendaraan Customer</th>
+        <th align="left">Nama Customer</th>
         <th>:</th>
-        <th>{{$custInfo['name']}}</th>
+        <th align="left">{{$custInfo['name']}}</th>
     </tr>
     <tr>
-        <th>Nama Customer</th>
+        <th align="left">Kendaraan Customer</th>
         <th>:</th>
-        <th>{{$custInfo['vehicle']}}</th>
+        <th align="left">{{$custInfo['vehicle']}}</th>
     </tr>
 </table>
 <table class="default-table">
     <tr>
         <th>Nama Ikan</th>
-        <th>Size Ikan</th>
         <th>Grade Ikan</th>
+        <th>Size Ikan</th>
         <th>Jumlah Ikan</th>
         <th>Tanggal dan Waktu</th>
     </tr>
    @foreach($fish as $item)
         <tr>
             <td>{{ $item->fish->name }}</td>
-            <td>{{ $item->size->name }}</td>
             <td>{{ $item->grade->name }}</td>
+            <td>{{ $item->size->name }}</td>
             <td>{{ $item->qty }}</td>
             <td>{{ $item->created_at }}</td>
         </tr>
@@ -53,14 +53,14 @@
 <br>
 <table class="default-table">
     <tr>
+        <th>Rekomendasi Rack</th>
         <th>Nama ikan</th>
-        <th>Nama Rak</th>
         <th>Jumlah Ikan</th>
     </tr>
     @foreach($rackInfo as $item)
         <tr>
-            <td>{{ $item['fish_name'] }}</td>
             <td>{{ $item['name'] }}</td>
+            <td>{{ $item['fish_name'] }}</td>
             <td>{{ $item['qty'] }}</td>
         </tr>
     @endforeach

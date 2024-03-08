@@ -5,7 +5,7 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-home"></i>
-                </span> Penyaluran Rack </h3>
+                </span> Penempatan Rack </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -21,8 +21,9 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
-                                <h4 class="card-title">Data Rack Kedatangan</h4>
-                                <h5 class="card-title">{{$emptyRack}} Rak Kosong</h5>
+                                <h4 class="card-title">Data Penempatan Rack</h4>
+                                <p>Keterangan Kode Rack<br>Contoh: A1.2.3 <br>A1= Rack <br>2= Kolom<br>3= Tingkat</p>
+                                <h5 class="card-title">{{$emptyRack}} Rack Kosong</h5>
                             </div>
                             @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
                                 <div class="col text-right">
@@ -39,8 +40,8 @@
                                     <th>Rack</th>
                                     <th>Kode</th>
                                     <th>Ikan</th>
-                                    <th>Size</th>
                                     <th>Grade</th>
+                                    <th>Size</th>
                                     <th>Jumlah Ikan</th>
                                      @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
                                         <th width="15%">Aksi</th>
@@ -54,8 +55,8 @@
                                         <td>{{ $data->rack->name }}</td>
                                         <td>{{ $data->kedatangan->code }}</td>
                                         <td>{{ $data->kedatangan->fish->name }}</td>
-                                        <td>{{ $data->kedatangan->size->name }}</td>
                                         <td>{{ $data->kedatangan->grade->name }}</td>
+                                        <td>{{ $data->kedatangan->size->name }}</td>
                                         <td>{{ $data->kedatangan->qty }}</td>
                                         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
                                             <td align="center">

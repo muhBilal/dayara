@@ -5,7 +5,7 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-home"></i>
-                </span> PreOrder </h3>
+                </span> Pre Order </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -121,17 +121,17 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect2">Size Ikan</label>
-                    <select class="form-control" name="size_id_${counter}" id="exampleFormControlSelect2">
-                            @foreach($size as $item)
+                    <label for="exampleFormControlSelect2">Grade Ikan</label>
+                    <select class="form-control" name="grade_id_${counter}" id="exampleFormControlSelect2">
+                            @foreach($grade as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect2">Grade Ikan</label>
-                    <select class="form-control" name="grade_id_${counter}" id="exampleFormControlSelect2">
-                            @foreach($grade as $item)
+                    <label for="exampleFormControlSelect2">Size Ikan</label>
+                    <select class="form-control" name="size_id_${counter}" id="exampleFormControlSelect2">
+                            @foreach($size as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                     </select>

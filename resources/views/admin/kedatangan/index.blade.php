@@ -35,8 +35,8 @@
                                     <th>Kode</th>
                                     <th>Tanggal</th>
                                     <th>Ikan</th>
-                                    <th>Size</th>
                                     <th>Grade</th>
+                                    <th>Size</th>
                                     <th>Gudang</th>
                                     <th>Supplier</th>
                                     <th>Urutan</th>
@@ -52,8 +52,8 @@
                                         <td>{{ $data->code }}</td>
                                         <td>{{ $data->date,"dmY" }}</td>
                                         <td>{{ $data->fish->name }}</td>
-                                        <td>{{ $data->size->name }}</td>
                                         <td>{{ $data->grade->name }}</td>
+                                        <td>{{ $data->size->name }}</td>
                                         <td>{{ $data->warehouse->name }}</td>
                                         <td>{{ $data->supplier->name }}</td>
                                         <td>{{ $data->urutan }}</td>

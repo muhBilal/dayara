@@ -5,7 +5,7 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-home"></i>
-                </span> PreOrder </h3>
+                </span> Pre Order </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
-                                <h4 class="card-title">Edit PreOrder</h4>
+                                <h4 class="card-title">Edit Pre Order</h4>
                             </div>
                             <div class="col text-right">
                                 <a href="javascript:void(0)" onclick="window.history.back()" class="btn btn-primary">Kembali</a>
@@ -58,18 +58,18 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="exampleFormControlSelect2">Size Ikan</label>
-                                                        <select class="form-control" name="size_id_{{ $key + 1 }}" id="exampleFormControlSelect2">
-                                                            @foreach($size as $item)
-                                                                <option value="{{ $item->id }}" {{ $order->size_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
                                                         <label for="exampleFormControlSelect2">Grade Ikan</label>
                                                         <select class="form-control" name="grade_id_{{ $key + 1 }}" id="exampleFormControlSelect2">
                                                             @foreach($grade as $item)
                                                                 <option value="{{ $item->id }}" {{ $order->grade_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect2">Size Ikan</label>
+                                                        <select class="form-control" name="size_id_{{ $key + 1 }}" id="exampleFormControlSelect2">
+                                                            @foreach($size as $item)
+                                                                <option value="{{ $item->id }}" {{ $order->size_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

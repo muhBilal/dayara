@@ -29,8 +29,8 @@
                           <tr>
                             <th width="5%">No</th>
                             <th>Ikan</th>
-                            <th>Size</th>
                             <th>Grade</th>
+                            <th>Size</th>
                             <th>Gudang</th>
                             <th >Qty</th>
                           </tr>
@@ -40,8 +40,8 @@
                             <tr>
                                 <td align="center"></td>
                                 <td >{{$stock->fish->name}}</td>
-                                <td align="center">{{$stock->size->name}}</td>
                                 <td align="center">{{$stock->grade->name}}</td>
+                                <td align="center">{{$stock->size->name}}</td>
                                 <td align="center">{{$stock->warehouse->name}}, {{$stock->supplier->name}}</td>
                                 <td align="center">{{$stock->qty}}</td>
                                 

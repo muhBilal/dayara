@@ -70,18 +70,18 @@
 											</select>
 										</div>
 										<div class="form-group">
-											<label for="exampleFormControlSelect2">Pilih Size</label>
-											<select class="form-control" name="size_id" id="exampleFormControlSelect2">
-												@foreach($size as $categorie)
-												<option value="{{ $categorie->id }}" {{ $categorie->id == $item->size_id ? 'selected' : ''  }}>{{ $categorie->name }}</option>
-												@endforeach
-											</select>
-										</div>
-										<div class="form-group">
 											<label for="exampleFormControlSelect2">Pilih Grade</label>
 											<select class="form-control" name="grade_id" id="exampleFormControlSelect2">
 												@foreach($grade as $categorie)
 												<option value="{{ $categorie->id }}" {{ $categorie->id == $item->grade_id ? 'selected' : ''  }}>{{ $categorie->name }}</option>
+												@endforeach
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="exampleFormControlSelect2">Pilih Size</label>
+											<select class="form-control" name="size_id" id="exampleFormControlSelect2">
+												@foreach($size as $categorie)
+												<option value="{{ $categorie->id }}" {{ $categorie->id == $item->size_id ? 'selected' : ''  }}>{{ $categorie->name }}</option>
 												@endforeach
 											</select>
 										</div>

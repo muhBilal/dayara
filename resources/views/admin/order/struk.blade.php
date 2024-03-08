@@ -19,39 +19,42 @@
     </style>
 </head>
 <body>
-<h1>Data Pre Order</h1>
+<h1 align="center">Surat Jalan</h1>
 <table class="cust-table">
     <tr>
-        <th>Nama Customer</th>
+        <th align="left">Nama Customer</th>
         <th>:</th>
-        <th>{{$order->name}}</th>
+        <th align="left">{{$order->name}}</th>
     </tr>
     <tr>
-        <th>Kendaraan Customer</th>
+        <th align="left">Kendaraan Customer</th>
         <th>:</th>
-        <th>{{$order->vehicle}}</th>
+        <th align="left">{{$order->vehicle}}</th>
     </tr>
     <tr>
-        <th>Status</th>
+        <th align="left">Status</th>
         <th>:</th>
-        <th>{{$order->status}}</th>
+        <th align="left">{{$order->status}}</th>
+    </tr>
+    <tr>
+        <th align="left">Tanggal & Waktu</th>
+        <th>:</th>
+        <th align="left">{{ $order->created_at->format('d-m-Y|H:i') }}</th>
     </tr>
 </table>
 <table class="default-table">
     <tr>
         <th>Nama Ikan</th>
-        <th>Size Ikan</th>
         <th>Grade Ikan</th>
+        <th>Size Ikan</th>
         <th>Jumlah Ikan</th>
-        <th>Tanggal dan Waktu</th>
     </tr>
    @foreach($order->detailOrders as $item)
         <tr>
             <td>{{ $item->fish->name }}</td>
-            <td>{{ $item->size->name }}</td>
             <td>{{ $item->grade->name }}</td>
+            <td>{{ $item->size->name }}</td>
             <td>{{ $item->qty }}</td>
-            <td>{{ $item->created_at }}</td>
         </tr>
    @endforeach
 </table>

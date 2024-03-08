@@ -17,7 +17,7 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-home"></i>
-                </span> PO </h3>
+                </span> Pre Order </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
-                                <h4 class="card-title">Data Ikan</h4>
+                                <h4 class="card-title">Data Pre Order </h4>
                             </div>
                             @if(Auth::user()->role == 'admin' || Auth::user()->role == 'marketing')
                                 <div class="col text-right">
@@ -59,7 +59,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->vehicle }}</td>
-                                        <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
+                                        <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y|H:i') }}</td>
                                         <td align="center">
 {{--                                            @if($item->status == 'menunggu')--}}
                            

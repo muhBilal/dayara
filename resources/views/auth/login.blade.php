@@ -27,7 +27,7 @@
               <div class="auth-form-light text-left p-5">
                 <div class="brand-logo">
                 <center>
-                  <img src="{{ asset('adminassets') }}/assets/images/DEPAN copy_ccexpress.png">
+                  <img src="{{ asset('adminassets') }}/assets/images/depan.png">
                   <h4>PT. DAYARA LAUT SEJAHTERA</h4>
                   </center>
                 </div>

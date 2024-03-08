@@ -52,14 +52,14 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->vehicle }}</td>
-                                        <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
+                                        <td>{{ $item->created_at->setTimezone('Asia/Jakarta')->format('d-m-Y|H:i') }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td align="center">
                                                 @if(Auth::user()->role == 'admin')
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <a href="{{ route('admin.order.detail',['id'=>$item->id]) }}"
                                                         class="btn btn-warning btn-sm">
-                                                            <i class="mdi mdi-tooltip-edit"></i>
+                                                            <i class="mdi mdi-qrcode-scan"></i>
                                                         </a>
                                                     </div>
                                                 @endif

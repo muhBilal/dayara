@@ -21,6 +21,7 @@
                     <div class="row mb-3">
                       <div class="col">
                       <h4 class="card-title">Data Rack</h4>
+                      <p>Keterangan Kode Rack<br>Contoh: A1.2.3 <br>A1= Rack <br>2= Kolom<br>3= Tingkat</p>
                       </div>
                       <div class="col text-right">
                       <a href="{{ route('admin.rack.tambah') }}" class="btn btn-primary">Tambah</a>
