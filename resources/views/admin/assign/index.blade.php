@@ -41,6 +41,7 @@
                                     <th>Ikan</th>
                                     <th>Size</th>
                                     <th>Grade</th>
+                                    <th>Jumlah Ikan</th>
                                      @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
                                         <th width="15%">Aksi</th>
                                      @endif
@@ -55,6 +56,7 @@
                                         <td>{{ $data->kedatangan->fish->name }}</td>
                                         <td>{{ $data->kedatangan->size->name }}</td>
                                         <td>{{ $data->kedatangan->grade->name }}</td>
+                                        <td>{{ $data->kedatangan->qty }}</td>
                                         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
                                             <td align="center">
                                                 <div class="btn-group" role="group" aria-label="Basic example">
