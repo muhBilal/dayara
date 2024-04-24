@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Product;
+use App\Categories;
+
+class KategoriController extends Controller
+{
+    public function produkByKategori($id)
+    {
+       //menampilkan data sesua kategori yang diminta user
+        return view('user.kategori', [
+            'produks' => Product::where('categories_id',$id)->paginate(5),
+            'categories' => Categories::all()
+        ]);
+    }
+}
