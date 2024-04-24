@@ -31,70 +31,93 @@
 						<div class="col-md-12">
 							<form action="{{ route('admin.kedatangan.store') }}" method="POST" enctype="multipart/form-data">
 								@csrf
-								<div class="flex">
-									<div class="w-3/4">
+								<div class="row">
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleInputUsername1">Tanggal</label>
 											<input required type="date" class="form-control" name="date">
 										</div>
+									</div>
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleInputUsername1">Urutan Kontainer</label>
 											<input required type="number" class="form-control" name="kontainer">
 										</div>
+									</div>
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleInputUsername1">Urutan Pallet</label>
 											<input required type="number" class="form-control" name="urutan">
 										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleFormControlSelect2">Pilih Gudang</label>
 											<select class="form-control" name="warehouse_id" id="exampleFormControlSelect2">
 												@foreach($warehouse as $categorie)
-												<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+													<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
 												@endforeach
 											</select>
 										</div>
+									</div>
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleFormControlSelect2">Pilih Supplier</label>
 											<select class="form-control" name="supplier_id" id="exampleFormControlSelect2">
 												@foreach($supplier as $categorie)
-												<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+													<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
 												@endforeach
 											</select>
 										</div>
+									</div>
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleFormControlSelect2">Pilih Ikan</label>
 											<select class="form-control" name="fish_id" id="exampleFormControlSelect2">
 												@foreach($fish as $ikan)
-												<option value="{{ $ikan->id }}">{{ $ikan->name }}</option>
+													<option value="{{ $ikan->id }}">{{ $ikan->name }}</option>
 												@endforeach
 											</select>
 										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleFormControlSelect2">Pilih Grade</label>
 											<select class="form-control" name="grade_id" id="exampleFormControlSelect2">
 												@foreach($grade as $categorie)
-												<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+													<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
 												@endforeach
 											</select>
 										</div>
+									</div>
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleFormControlSelect2">Pilih Size</label>
 											<select class="form-control" name="size_id" id="exampleFormControlSelect2">
 												@foreach($size as $categorie)
-												<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+													<option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
 												@endforeach
 											</select>
 										</div>
+									</div>
+									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="exampleInputUsername1">Qty</label>
 											<input required type="number" class="form-control" name="qty">
 										</div>
-										
-										<div class="text-right">
-											<button type="submit" class="bg-success btn btn-success text-right">Simpan</button>
-										</div>
 									</div>
 								</div>
+								
+								<div class="text-right">
+									<button type="submit" class="bg-success btn btn-success text-right">Simpan</button>
+								</div>
+								
 							</form>
 						</div>
 					</div>
