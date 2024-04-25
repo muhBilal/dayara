@@ -51,7 +51,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-lg-4">
 										<div class="form-group">
@@ -84,7 +84,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-lg-4">
 										<div class="form-group">
@@ -113,11 +113,11 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="text-right">
 									<button type="submit" class="bg-success btn btn-success text-right">Simpan</button>
 								</div>
-								
+
 							</form>
 						</div>
 					</div>

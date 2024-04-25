@@ -25,8 +25,9 @@ class KedatanganController extends Controller
     public function index()
     {
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
-        $kedatangan = Kedatangan::with('fish','grade','warehouse','size')
+        $kedatangan = Kedatangan::with('fish', 'grade', 'warehouse', 'size', 'kedatanganRack')
             ->where('qty', '>', 0)
+            ->whereDoesntHave('kedatanganRack')
             ->orderBy('id', 'asc')
             ->get();
 
