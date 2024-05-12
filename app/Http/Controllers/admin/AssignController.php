@@ -40,6 +40,17 @@ class AssignController extends Controller
         return view('admin.assign.index', compact('assign', 'countEmptyRack', 'emptyRack', 'rack'));
     }
 
+    public function dontHaveRack(){
+        $kedatangan_rack = KedatanganRack::all();
+        $specificRack = $kedatangan_rack->pluck('rack_id', 'kedatangan_id')->toArray();
+
+        $kedatangan = Kedatangan::with('fish', 'grade', 'size')
+            ->whereNotIn('id', array_keys($specificRack))
+            ->get();
+
+        return view('admin.assign.dontHaveRack', compact('kedatangan'));
+    }
+    
     function getRack(Request $request)
     {
         $kedatangan_rack = KedatanganRack::all();

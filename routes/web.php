@@ -102,6 +102,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
 
     Route::get('/admin/assign', 'admin\AssignController@index')->name('admin.assign');
     Route::get('/admin/assign/tambah', 'admin\AssignController@tambah')->name('admin.assign.tambah');
+    Route::get('/admin/assign/dontHaveRack', 'admin\AssignController@dontHaveRack')->name('admin.assign.dontHaveRack');
     Route::get('/admin/assign/rack', 'admin\AssignController@getrack')->name('admin.assign.rack.search');
     Route::post('/admin/assign/store', 'admin\AssignController@store')->name('admin.assign.store');
     Route::post('/admin/assign/update/{id}', 'admin\AssignController@update')->name('admin.assign.update');

@@ -33,10 +33,15 @@
                         </div>
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        <div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             Rak Kosong
                         </button>
+                        <a  href="{{route('admin.assign.dontHaveRack')}}" class="btn btn-primary mx-3" >
+                            Kedatangan Belum Mendapat Rak
+                        </a>
+                        </div>
 
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
