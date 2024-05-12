@@ -53,9 +53,11 @@ class KedatanganController extends Controller
         $warehouse = Warehouse::find($request->warehouse_id);
         // $suplier = Warehouse::find($request->supplier_id);
 
-        $kontainer = $request->kontainer;
-        $urutan = $request->urutan;
-        $date=date_create($request->date);
+        // $kontainer = $request->kontainer;
+        // $urutan = $request->urutan;
+        $kontainer = $urutan = 1;
+        
+        $date = date_create($request->date);
         $tanggal = date_format($date,"dmY");
         $code = $kontainer."/".$urutan."/".$warehouse->name."/SUP".$request->supplier_id."/".$tanggal;
         Kedatangan::updateOrCreate([
@@ -63,12 +65,12 @@ class KedatanganController extends Controller
             'date' => $request->date,
             'supplier_id' => $request->supplier_id,
             'warehouse_id' => $request->warehouse_id,
-            'urutan' => $request->urutan,
+            'urutan' => $urutan,
             'fish_id' => $request->fish_id,
             'size_id' => $request->size_id,
             'grade_id' => $request->grade_id,
             'qty' => $request->qty,
-            'kontainer' => $request->kontainer
+            'kontainer' => $kontainer
         ], []);
 
         return redirect()->route('admin.kedatangan')->with('status', 'Berhasil Menambah Kedatangan');
