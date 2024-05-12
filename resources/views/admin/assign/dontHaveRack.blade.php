@@ -23,9 +23,9 @@
                             <div class="col">
                                 <h4 class="card-title">Data Kedatangan belum mendapat rack</h4>
                             </div>
-                            <div class="col text-right">
+                            {{-- <div class="col text-right">
                                 <a href="{{ route('admin.kedatangan.tambah') }}" class="btn btn-primary">Tambah</a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hovered" id="table">
@@ -40,7 +40,7 @@
                                     <th>Qty</th>
                                     <th>Urutan</th>
                                     <th>Kode</th>
-                                    <th width="15%">Aksi</th>
+                                    {{-- <th width="15%">Aksi</th> --}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -55,7 +55,7 @@
                                         <td>{{ $data->qty }}</td>
                                         <td>{{ $data->kontainer }}/{{ $data->urutan }}</td>
                                         <td>{{ $data->code }}</td>
-                                        <td align="center">
+                                        {{-- <td align="center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <a href="{{ route('admin.kedatangan.edit',['id'=>$data->id]) }}"
                                                    class="btn btn-warning btn-sm">
@@ -74,7 +74,7 @@
                                                     </button>
                                                 </form>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                                 </tbody>

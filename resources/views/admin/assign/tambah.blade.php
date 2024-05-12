@@ -35,11 +35,11 @@
                                     @csrf
                                     <div class="flex">
                                         <div class="w-3/4">
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label for="date">Tanggal</label>
                                                 <input type="date" class="form-control" name="date" id="date"
                                                        @if(isset($date)) value="{{ $date }}" @endif>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Pilih Kedatangan</label>
