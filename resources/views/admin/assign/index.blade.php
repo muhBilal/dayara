@@ -53,17 +53,52 @@
                                             aria-label="Close"></button> --}}
                                     </div>
                                     <div class="modal-body">
-                                        <div class="row row-cols-8">
-                                            @foreach ($rack as $item)
-                                                <div class="col mb-2">
-                                                    <button class="btn @if ($item['status'] == 'empty') btn-primary @else btn-danger @endif">
-                                                        {{ $item['name'] }}
-                                                    </button>
+                                        <div class="row gap-3">
+                                            <div class="col-3">
+                                                <div class="row" style="width: 100%;">
+                                                    @foreach ($rackGroupedA as $rack)
+                                                        <div class="col-3 mb-2">
+                                                            <button class="btn @if ($rack['status'] == 'empty') btn-primary @else btn-danger @endif" style="padding: 10px; font-size: 10px;">
+                                                                {{ $rack['name'] }}
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
-                                            @endforeach
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row" style="width: 100%;">
+                                                    @foreach ($rackGroupedB as $rack)
+                                                        <div class="col-3 mb-2">
+                                                            <button class="btn @if ($rack['status'] == 'empty') btn-primary @else btn-danger @endif" style="padding: 10px; font-size: 10px;">
+                                                                {{ $rack['name'] }}
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row" style="width: 100%;">
+                                                    @foreach ($rackGroupedC as $rack)
+                                                        <div class="col-3 mb-2">
+                                                            <button class="btn @if ($rack['status'] == 'empty') btn-primary @else btn-danger @endif" style="padding: 10px; font-size: 10px;">
+                                                                {{ $rack['name'] }}
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row" style="width: 100%;">
+                                                    @foreach ($rackGroupedD as $rack)
+                                                        <div class="col-3 mb-2">
+                                                            <button class="btn @if ($rack['status'] == 'empty') btn-primary @else btn-danger @endif" style="padding: 10px; font-size: 10px;">
+                                                                {{ $rack['name'] }}
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
-
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"

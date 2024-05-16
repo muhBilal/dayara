@@ -140,7 +140,7 @@
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.kedatangan') }}">Kedatangan</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.assign') }}">Penempatan Rack</a></li>
 								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.preOrder') }}">PO</a></li>
-								<li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li>
+								{{-- <li class="nav-item"> <a class="nav-link" href="{{ route('admin.order') }}">Barang Keluar</a></li> --}}
 								@endif
 
 

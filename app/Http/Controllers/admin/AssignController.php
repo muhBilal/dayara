@@ -22,22 +22,59 @@ class AssignController extends Controller
         $emptyRack = Rack::whereNotIn('id', KedatanganRack::pluck('rack_id'))->get();
         $allRack = Rack::all();
 
-        $rack= [];
+        $rackGrouped = [
+            'A' => [],
+            'B' => [],
+            'C' => [],
+            'D' => []
+        ];
+
         foreach ($allRack as $r) {
             $status = 'full';
             foreach ($emptyRack as $er) {
                 if ($r->id == $er->id) {
                     $status = 'empty';
+                    break;
                 }
             }
-            $rack[] = [
+
+            $rackData = [
                 'id' => $r->id,
                 'name' => $r->name,
                 'status' => $status
             ];
+
+            $firstLetter = strtoupper($r->name[0]);
+            if (isset($rackGrouped[$firstLetter])) {
+                $rackGrouped[$firstLetter][] = $rackData;
+            }
         }
 
-        return view('admin.assign.index', compact('assign', 'countEmptyRack', 'emptyRack', 'rack'));
+        $rackGroupedA = [];
+        $rackGroupedB = [];
+        $rackGroupedC = [];
+        $rackGroupedD = [];
+
+        foreach ($rackGrouped as $letter => $racks) {
+            switch ($letter) {
+                case 'A':
+                    $rackGroupedA = $racks;
+                    break;
+                case 'B':
+                    $rackGroupedB = $racks;
+                    break;
+                case 'C':
+                    $rackGroupedC = $racks;
+                    break;
+                case 'D':
+                    $rackGroupedD = $racks;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return view('admin.assign.index', compact('assign', 'countEmptyRack', 'emptyRack', 'rackGroupedA', 'rackGroupedB', 'rackGroupedC', 'rackGroupedD'));
     }
 
     public function dontHaveRack(){
@@ -50,7 +87,7 @@ class AssignController extends Controller
 
         return view('admin.assign.dontHaveRack', compact('kedatangan'));
     }
-    
+
     function getRack(Request $request)
     {
         $kedatangan_rack = KedatanganRack::all();
