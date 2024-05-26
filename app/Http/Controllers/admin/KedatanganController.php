@@ -60,7 +60,7 @@ class KedatanganController extends Controller
         $date = date_create($request->date);
         $tanggal = date_format($date,"dmY");
         $code = $kontainer."/".$urutan."/".$warehouse->name."/SUP".$request->supplier_id."/".$tanggal;
-        Kedatangan::updateOrCreate([
+        Kedatangan::create([
             'code' => $code,
             'date' => $request->date,
             'supplier_id' => $request->supplier_id,
