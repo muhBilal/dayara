@@ -103,7 +103,7 @@ class AssignController extends Controller
         $specificRack = $kedatangan_rack->pluck('rack_id', 'kedatangan_id')->toArray();
 
         $kedatangan = Kedatangan::with('fish', 'grade', 'size')
-            ->whereNotIn('id', array_keys($specificRack))
+            ->whereNotIn('id', array_keys($specificRack))->where('qty', '>', 0)
             ->get();
 
         $rack = Rack::whereNotIn('id', array_values($specificRack))->get();
